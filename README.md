@@ -5,6 +5,7 @@
 - All resources that will be created should be created using cloudformation
 - The front must be created using angular
 - The front must be served at S3
+- The front must be served using cloudFront
 - Login with cognito
   - The cognito should be created from a cloudformation and attached at the amplify lib
 - The images should be storage at S3
