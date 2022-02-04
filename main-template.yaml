@@ -88,7 +88,7 @@ Resources:
   AuthOnlineGallery:
     Type: "AWS::CloudFormation::Stack"
     Properties:
-      TemplateURL: !Sub "https://s3.amazonaws.com/${AWS::StackName}/cfn-templates/auth/online-gallery-cloudformation-template.json"
+      TemplateURL: !Sub "https://s3.amazonaws.com/${AWS::StackName}/cfn-templates/auth/auth-template.yaml"
       Parameters:
         allowUnauthenticatedIdentities: true
         autoVerifiedAttributes: email
@@ -126,10 +126,10 @@ Resources:
         dependsOn: ""
         env: dev
 
-  StorageS3OnlineImages:
+  StorageS3OnlineGallery:
     Type: "AWS::CloudFormation::Stack"
     Properties:
-      TemplateURL: !Sub "https://s3.amazonaws.com/${AWS::StackName}/cfn-templates/storage/cloudformation-template.json"
+      TemplateURL: !Sub "https://s3.amazonaws.com/${AWS::StackName}/cfn-templates/storage/image-storage-template.yaml"
       Parameters:
         selectedGuestPermissions: "s3:GetObject,s3:ListBucket"
         selectedAuthenticatedPermissions: "s3:PutObject,s3:GetObject,s3:ListBucket,s3:DeleteObject"
@@ -149,6 +149,16 @@ Resources:
         s3PermissionsGuestPublic: "s3:GetObject"
         s3PermissionsGuestUploads: DISALLOW
         env: dev
+
+  FrontStorageOnlineGallery:
+    Type: "AWS::CloudFormation::Stack"
+      Properties:
+        TemplateURL: !Sub "https://s3.amazonaws.com/${AWS::StackName}/cfn-templates/front/front-storage-template.yaml"
+
+  CodeBuildOnlineGallery:
+    Type: "AWS::CloudFormation::Stack"
+      Properties:
+        TemplateURL: !Sub "https://s3.amazonaws.com/${AWS::StackName}/cfn-templates/build/codebuild-template.yaml"
 
   UpdateRolesWithIDPFunction:
     DependsOn:
