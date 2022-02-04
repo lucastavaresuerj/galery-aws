@@ -8,6 +8,7 @@
 - Login with cognito
   - The cognito should be created from a cloudformation and attached at the amplify lib
 - The images should be storage at S3
+  - The images bucket should be created from a cloudformation and attached at the amplify lib
 - The images should be resized for thumbnail using lambda and put at the different S3 bucket but must keep the original image
 - Users should have as fields:
   - username
