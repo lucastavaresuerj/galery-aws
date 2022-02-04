@@ -1,4 +1,4 @@
-# galery-aws
+# gallery-aws
 
 ## Objectives
 
