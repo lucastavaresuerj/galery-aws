@@ -2,10 +2,6 @@ Description: Root Stack for online gallery project
 AWSTemplateFormatVersion: 2010-09-09
 
 Parameters:
-  DeploymentBucketName:
-    Type: String
-    Default: DeploymentBucket
-    Description: Name of the common deployment bucket provided by the parent stack
   AuthRoleName:
     Type: String
     Default: AuthRoleName
@@ -31,6 +27,11 @@ Outputs:
     Value: !Ref "AWS::StackId"
     Export:
       Name: !Sub "${AWS::StackName}-StackId"
+  DeploymentBucketName:
+    Description: CloudFormation provider root stack deployment bucket name
+    Value: !Ref DeploymentBucket
+    Export:
+      Name: !Sub "${AWS::StackName}-DeploymentBucketName"
   AuthRoleArn:
     Value: !GetAtt
       - AuthRole
@@ -39,11 +40,6 @@ Outputs:
     Value: !GetAtt
       - UnauthRole
       - Arn
-  DeploymentBucketName:
-    Description: CloudFormation provider root stack deployment bucket name
-    Value: !Ref DeploymentBucketName
-    Export:
-      Name: !Sub "${AWS::StackName}-DeploymentBucketName"
   AuthRoleName:
     Value: !Ref AuthRole
   UnauthRoleName:
@@ -53,7 +49,6 @@ Resources:
   DeploymentBucket:
     Type: "AWS::S3::Bucket"
     Properties:
-      BucketName: !Ref DeploymentBucketName
       BucketEncryption:
         ServerSideEncryptionConfiguration:
           - ServerSideEncryptionByDefault:
@@ -88,7 +83,7 @@ Resources:
   AuthOnlineGallery:
     Type: "AWS::CloudFormation::Stack"
     Properties:
-      TemplateURL: !Sub "https://s3.amazonaws.com/${AWS::StackName}/cfn-templates/auth/auth-template.yaml"
+      TemplateURL: !Sub "https://s3.amazonaws.com/${DeploymentBucket}/cfn-templates/auth/auth-template.yaml"
       Parameters:
         allowUnauthenticatedIdentities: true
         autoVerifiedAttributes: email
@@ -129,7 +124,7 @@ Resources:
   StorageS3OnlineGallery:
     Type: "AWS::CloudFormation::Stack"
     Properties:
-      TemplateURL: !Sub "https://s3.amazonaws.com/${AWS::StackName}/cfn-templates/storage/image-storage-template.yaml"
+      TemplateURL: !Sub "https://s3.amazonaws.com/${DeploymentBucket}/cfn-templates/storage/image-storage-template.yaml"
       Parameters:
         selectedGuestPermissions: "s3:GetObject,s3:ListBucket"
         selectedAuthenticatedPermissions: "s3:PutObject,s3:GetObject,s3:ListBucket,s3:DeleteObject"
@@ -152,13 +147,16 @@ Resources:
 
   FrontStorageOnlineGallery:
     Type: "AWS::CloudFormation::Stack"
-      Properties:
-        TemplateURL: !Sub "https://s3.amazonaws.com/${AWS::StackName}/cfn-templates/front/front-storage-template.yaml"
+    Properties:
+      TemplateURL: !Sub "https://s3.amazonaws.com/${DeploymentBucket}/cfn-templates/front/front-storage-template.yaml"
 
+  # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/quickref-cloudformation.html
   CodeBuildOnlineGallery:
     Type: "AWS::CloudFormation::Stack"
-      Properties:
-        TemplateURL: !Sub "https://s3.amazonaws.com/${AWS::StackName}/cfn-templates/build/codebuild-template.yaml"
+    Properties:
+      TemplateURL: !Sub "https://s3.amazonaws.com/${DeploymentBucket}/cfn-templates/build/codebuild-template.yaml"
+      Parameters:
+        S3BucketWebSite: !GetAtt FrontStorageOnlineGallery.Outputs.S3BucketName
 
   UpdateRolesWithIDPFunction:
     DependsOn:

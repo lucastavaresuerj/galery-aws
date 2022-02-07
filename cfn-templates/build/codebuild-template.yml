@@ -104,7 +104,6 @@ Resources:
           - Type: OAUTH
             Resource: !Ref CodeBuildSourceCredential
           - Ref: AWS::NoValue
-
       Artifacts:
         Type: NO_ARTIFACTS
       Triggers:
