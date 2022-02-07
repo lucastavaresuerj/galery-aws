@@ -143,7 +143,6 @@ Resources:
         s3PermissionsAuthenticatedUploads: "s3:PutObject"
         s3PermissionsGuestPublic: "s3:GetObject"
         s3PermissionsGuestUploads: DISALLOW
-        env: dev
 
   FrontStorageOnlineGallery:
     Type: "AWS::CloudFormation::Stack"
