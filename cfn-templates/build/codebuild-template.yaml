@@ -19,15 +19,6 @@ Parameters:
   CodeBuildEnvironmentImage:
     Type: String
     Default: "aws/codebuild/standard:4.0"
-  GitHubAccessToken:
-    Type: AWS::SSM::Parameter::Value<String>
-    Description: 'Name of parameter with GitHub access token, param type: "AWS::SSM::Parameter::Value<String>"'
-    Default: NONE
-    NoEcho: True
-
-Conditions:
-  ShouldCreateSourceCredential: !Not
-    - !Equals [!Ref GitHubAccessToken, "NONE"]
 
 Resources:
   CodeBuildServiceRole:
@@ -81,15 +72,6 @@ Resources:
                 Resource:
                   - !Sub "arn:aws:s3:::${S3BucketWebSite}/*"
 
-  CodeBuildSourceCredential:
-    Type: "AWS::CodeBuild::SourceCredential"
-    Properties:
-      AuthType: PERSONAL_ACCESS_TOKEN
-      ServerType: GITHUB
-      Token: >-
-        {{resolve:secretsmanager:github-access-token:SecretString:GITHUB_ACCESS_TOKEN}}
-    Condition: ShouldCreateSourceCredential
-
   CodeBuilProject:
     Type: "AWS::CodeBuild::Project"
     Properties:
@@ -99,11 +81,6 @@ Resources:
         Type: GITHUB
         Location: !Sub "https://github.com/${GitHubOwner}/${GitHubRepository}.git"
         BuildSpec: buildspec.yaml
-        Auth: !If
-          - ShouldCreateSourceCredential
-          - Type: OAUTH
-            Resource: !Ref CodeBuildSourceCredential
-          - Ref: AWS::NoValue
       Artifacts:
         Type: NO_ARTIFACTS
       Triggers:
