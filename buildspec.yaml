@@ -3,7 +3,7 @@ version: 0.2
 env:
   variables:
     S3_BUCKET_NAME: ""
-    PROJECT_ANGULAR_NAME: "say-is-ok"
+    PROJECT_ANGULAR_NAME: "gallery"
 
 phases:
   install:
