@@ -21,6 +21,20 @@ Parameters:
     Default: "aws/codebuild/standard:4.0"
 
 Resources:
+  DeployBucketPolicy:
+    Type: "AWS::S3::BucketPolicy"
+    Properties:
+      Bucket: !Ref S3BucketDeploy
+      PolicyDocument:
+        Statement:
+          - Action: "*"
+            Effect: Allow
+            Resource:
+              - !Sub "arn:aws:s3:::${S3BucketDeploy}"
+              - !Sub "arn:aws:s3:::${S3BucketDeploy}/*"
+            Principal:
+              AWS: !GetAtt CodeBuilProject.Arn
+
   CodeBuildServiceRole:
     Type: "AWS::IAM::Role"
     Properties:
@@ -44,39 +58,6 @@ Resources:
                   - "logs:PutLogEvents"
                 Resource:
                   - "*"
-              - Sid: S3GetObjectPolicy
-                Effect: Allow
-                Action:
-                  - "s3:GetObject"
-                  - "s3:GetObjectVersion"
-                Resource:
-                  - !Sub "arn:aws:s3:::${S3BucketDeploy}/*"
-              - Sid: S3PutObjectPolicy
-                Effect: Allow
-                Action:
-                  - "s3:PutObject"
-                  - "s3:PutObjectAcl"
-                Resource:
-                  - !Sub "arn:aws:s3:::${S3BucketDeploy}/*"
-              - Sid: S3DeleteObjectPolicy
-                Effect: Allow
-                Action:
-                  - "s3:DeleteObject"
-                Resource:
-                  - !Sub "arn:aws:s3:::${S3BucketDeploy}/*"
-              - Sid: S3BucketIdentity
-                Effect: Allow
-                Action:
-                  - "s3:GetBucketAcl"
-                  - "s3:GetBucketLocation"
-                Resource:
-                  - !Sub "arn:aws:s3:::${S3BucketDeploy}/*"
-              - Sid: ListBucket
-                Effect: Allow
-                Action:
-                  - "s3:ListBucket"
-                Resource:
-                  - !Sub "arn:aws:s3:::${S3BucketDeploy}"
               - Sid: ManageStack
                 Effect: Allow
                 Action:
