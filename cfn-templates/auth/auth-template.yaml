@@ -271,3 +271,6 @@ Outputs:
       - UserPoolClientInputs
       - appSecret
     Condition: ShouldOutputAppClientSecrets
+  Region:
+    Description: Region
+    Value: !Ref "AWS::Region"

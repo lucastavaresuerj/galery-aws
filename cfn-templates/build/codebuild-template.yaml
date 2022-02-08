@@ -19,6 +19,18 @@ Parameters:
   CodeBuildEnvironmentImage:
     Type: String
     Default: "aws/codebuild/standard:4.0"
+  IdentityPoolId:
+    Type: String
+  CognitoRegion:
+    Type: String
+  UserPoolId:
+    Type: String
+  UserPoolWebClientId:
+    Type: String
+  S3StorageName:
+    Type: String
+  S3StorageRegion:
+    Type: String
 
 Resources:
   CodeBuildServiceRole:

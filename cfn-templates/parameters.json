@@ -1,0 +1,10 @@
+[
+  {
+    "ParameterKey": "AuthRoleName",
+    "ParameterValue": "AuthRoleName-gallery"
+  },
+  {
+    "ParameterKey": "UnauthRoleName",
+    "ParameterValue": "UnauthRoleName-gallery"
+  }
+]
