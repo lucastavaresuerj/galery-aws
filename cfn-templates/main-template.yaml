@@ -87,6 +87,7 @@ Resources:
       Parameters:
         S3BucketDeploy: !Ref DeploymentBucket
         MainStackName: !Ref "AWS::StackName"
+        MainStackID: !Ref "AWS::StackId"
 
   AuthOnlineGallery:
     Type: "AWS::CloudFormation::Stack"

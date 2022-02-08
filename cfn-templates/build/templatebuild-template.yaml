@@ -7,6 +7,9 @@ Parameters:
   MainStackName:
     Type: String
     AllowedPattern: "[A-Za-z0-9-]+"
+  MainStackID:
+    Type: String
+    AllowedPattern: "[A-Za-z0-9-]+"
   GitHubOwner:
     Type: String
     AllowedPattern: "[A-Za-z0-9-]+"
@@ -68,7 +71,7 @@ Resources:
                 Action:
                   - "cloudformation:*"
                 Resource:
-                  - !Ref "AWS::StackId"
+                  - !Ref MainStackID
 
   CodeBuilProject:
     Type: "AWS::CodeBuild::Project"
