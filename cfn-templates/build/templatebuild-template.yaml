@@ -71,6 +71,12 @@ Resources:
                   - "s3:GetBucketLocation"
                 Resource:
                   - !Sub "arn:aws:s3:::${S3BucketDeploy}/*"
+              - Sid: ListBucket
+                Effect: Allow
+                Action:
+                  - "s3:ListBucket"
+                Resource:
+                  - !Sub "arn:aws:s3:::${S3BucketDeploy}"
               - Sid: ManageStack
                 Effect: Allow
                 Action:
