@@ -37,7 +37,6 @@ Resources:
             Resource:
               - !Sub "arn:aws:s3:::${S3BucketDeploy}"
               - !Sub "arn:aws:s3:::${S3BucketDeploy}/*"
-              - !Sub "arn:aws:s3:::${S3BucketDeploy}/cfn-templates/*"
             Principal:
               AWS:
                 - !GetAtt CodeBuildServiceRole.Arn
