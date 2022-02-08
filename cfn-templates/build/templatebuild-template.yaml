@@ -110,4 +110,4 @@ Outputs:
     Value: !Ref CodeBuilProject
   SayIsOk:
     Description: "Just for test if is building"
-    Value: "Is oooook!"
+    Value: "Is ooooook!"
