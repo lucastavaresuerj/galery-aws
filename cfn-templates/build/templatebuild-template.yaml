@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: 2010-09-09
-Description: Using code build to deploy an angular project into S3
+Description: Using code build to deploy the templates to aws cloudformation
 Parameters:
   S3BucketDeploy:
     Type: String
