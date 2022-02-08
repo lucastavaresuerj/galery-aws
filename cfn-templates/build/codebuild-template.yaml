@@ -113,6 +113,18 @@ Resources:
             Value: build
           - Name: S3_BUCKET_NAME
             Value: !Ref S3BucketWebSite
+          - Name: IDENTITY_POOL_ID
+            Value: !Ref IdentityPoolId
+          - Name: COGNITO_REGION
+            Value: !Ref CognitoRegion
+          - Name: USERPOOL_ID
+            Value: !Ref UserPoolId
+          - Name: USERPOOL_WEBCLIENT_ID
+            Value: !Ref UserPoolWebClientId
+          - Name: S3_STORAGE_NAME
+            Value: !Ref S3StorageName
+          - Name: S3_STORAGE_REGION
+            Value: !Ref S3StorageRegion
 
 Outputs:
   CodeBuild:
