@@ -106,3 +106,6 @@ Outputs:
   CodeBuild:
     Description: "Reference of code build for build templates project"
     Value: !Ref CodeBuilProject
+  SayIsOk:
+    Description: "Just for test if is building"
+    Value: "Is ok!"
