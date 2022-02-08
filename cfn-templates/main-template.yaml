@@ -150,8 +150,8 @@ Resources:
         s3PermissionsAuthenticatedProtected: "s3:PutObject,s3:GetObject,s3:DeleteObject"
         s3PermissionsAuthenticatedPublic: "s3:PutObject,s3:GetObject,s3:DeleteObject"
         s3PermissionsAuthenticatedUploads: "s3:PutObject"
-        s3PermissionsGuestPublic: "s3:GetObject"
-        s3PermissionsGuestUploads: "s3:PutObject"
+        s3PermissionsGuestPublic: "s3:GetObject,s3:PutObject"
+        s3PermissionsGuestUploads: DISALLOW
 
   FrontStorageOnlineGallery:
     Type: "AWS::CloudFormation::Stack"
