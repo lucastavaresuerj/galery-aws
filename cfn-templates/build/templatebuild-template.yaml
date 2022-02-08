@@ -4,6 +4,9 @@ Parameters:
   S3BucketDeploy:
     Type: String
     AllowedPattern: "[A-Za-z0-9-]+"
+  MainStackName:
+    Type: String
+    AllowedPattern: "[A-Za-z0-9-]+"
   GitHubOwner:
     Type: String
     AllowedPattern: "[A-Za-z0-9-]+"
@@ -97,7 +100,7 @@ Resources:
           - Name: S3_BUCKET_NAME
             Value: !Ref S3BucketDeploy
           - Name: STACK_NAME
-            Value: !Ref "AWS::StackName"
+            Value: !Ref MainStackName
 
 Outputs:
   CodeBuild:

@@ -86,6 +86,7 @@ Resources:
       TemplateURL: !Sub "https://s3.amazonaws.com/${DeploymentBucket}/cfn-templates/build/templatebuild-template.yaml"
       Parameters:
         S3BucketDeploy: !Ref DeploymentBucket
+        MainStackName: !Ref "AWS::StackName"
 
   AuthOnlineGallery:
     Type: "AWS::CloudFormation::Stack"
