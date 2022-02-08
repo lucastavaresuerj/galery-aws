@@ -1,0 +1,116 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: Using code build to deploy an angular project into S3
+Parameters:
+  S3BucketDeploy:
+    Type: String
+    AllowedPattern: "[A-Za-z0-9-]+"
+  GitHubOwner:
+    Type: String
+    AllowedPattern: "[A-Za-z0-9-]+"
+    Default: lucastavaresuerj
+  GitHubRepository:
+    Type: String
+    AllowedPattern: "[A-Za-z0-9-]+"
+    Default: gallery-aws
+  GitHubBranch:
+    Type: String
+    AllowedPattern: "[A-Za-z0-9-]+"
+    Default: main
+  CodeBuildEnvironmentImage:
+    Type: String
+    Default: "aws/codebuild/standard:4.0"
+
+Resources:
+  CodeBuildServiceRole:
+    Type: "AWS::IAM::Role"
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: codebuild.amazonaws.com
+            Action: "sts:AssumeRole"
+      Policies:
+        - PolicyName: !Sub "root-codebuild-stack-${AWS::StackName}"
+          PolicyDocument:
+            Version: 2012-10-17
+            Statement:
+              - Sid: CloudWatchLogsPolicy
+                Effect: Allow
+                Action:
+                  - "logs:CreateLogGroup"
+                  - "logs:CreateLogStream"
+                  - "logs:PutLogEvents"
+                Resource:
+                  - "*"
+              - Sid: S3GetObjectPolicy
+                Effect: Allow
+                Action:
+                  - "s3:GetObject"
+                  - "s3:GetObjectVersion"
+                Resource:
+                  - !Sub "arn:aws:s3:::${S3BucketDeploy}/*"
+              - Sid: S3PutObjectPolicy
+                Effect: Allow
+                Action:
+                  - "s3:PutObject"
+                  - "s3:PutObjectAcl"
+                Resource:
+                  - !Sub "arn:aws:s3:::${S3BucketDeploy}/*"
+              - Sid: S3DeleteObjectPolicy
+                Effect: Allow
+                Action:
+                  - "s3:DeleteObject"
+                Resource:
+                  - !Sub "arn:aws:s3:::${S3BucketDeploy}/*"
+              - Sid: S3BucketIdentity
+                Effect: Allow
+                Action:
+                  - "s3:GetBucketAcl"
+                  - "s3:GetBucketLocation"
+                Resource:
+                  - !Sub "arn:aws:s3:::${S3BucketDeploy}/*"
+              - Sid: ManageStack
+                Effect: Allow
+                Action:
+                  - "cloudformation:*"
+                Resource:
+                  - !Ref "AWS::StackId"
+
+  CodeBuilProject:
+    Type: "AWS::CodeBuild::Project"
+    Properties:
+      Name: !Sub "${AWS::StackName}-template"
+      ServiceRole: !GetAtt CodeBuildServiceRole.Arn
+      Source:
+        Type: GITHUB
+        Location: !Sub "https://github.com/${GitHubOwner}/${GitHubRepository}.git"
+        BuildSpec: templatespec.yaml
+      Artifacts:
+        Type: NO_ARTIFACTS
+      Triggers:
+        Webhook: true
+        FilterGroups:
+          - - Type: EVENT
+              Pattern: PUSH
+            - Type: HEAD_REF
+              Pattern: !Sub "^refs/heads/${GitHubBranch}$"
+            - Type: COMMIT_MESSAGE
+              Pattern: \[template\]
+      Environment:
+        Type: LINUX_CONTAINER
+        ComputeType: BUILD_GENERAL1_SMALL
+        Image: !Ref CodeBuildEnvironmentImage
+        EnvironmentVariables:
+          - Name: ENV_NAME
+            Value: build
+          - Name: S3_BUCKET_NAME
+            Value: !Ref S3BucketDeploy
+          - Name: STACK_NAME
+            Value: !Ref "AWS::StackName"
+
+Outputs:
+  CodeBuild:
+    Description: "Reference of code build for build templates project"
+    Value: !Ref CodeBuilProject
