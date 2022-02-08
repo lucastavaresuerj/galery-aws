@@ -33,7 +33,9 @@ Resources:
               - !Sub "arn:aws:s3:::${S3BucketDeploy}"
               - !Sub "arn:aws:s3:::${S3BucketDeploy}/*"
             Principal:
-              AWS: !GetAtt CodeBuilProject.Arn
+              AWS:
+                - !GetAtt CodeBuildServiceRole.Arn
+    DependsOn: CodeBuilProject
 
   CodeBuildServiceRole:
     Type: "AWS::IAM::Role"
