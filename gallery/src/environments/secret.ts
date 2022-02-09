@@ -1,0 +1,8 @@
+export const env = {
+  IDENTITY_POOL_ID: '',
+  COGNITO_REGION: '',
+  USERPOOL_ID: '',
+  USERPOOL_WEBCLIENT_ID: '',
+  S3_STORAGE_NAME: '',
+  S3_STORAGE_REGION: '',
+};
