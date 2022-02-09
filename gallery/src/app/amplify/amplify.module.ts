@@ -4,6 +4,8 @@ import Amplify from 'aws-amplify';
 
 import { environment } from '../../environments/environment';
 
+console.log(environment.amplifyConfig);
+
 Amplify.configure(environment.amplifyConfig);
 
 @NgModule({
