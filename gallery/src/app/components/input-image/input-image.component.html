@@ -1,0 +1,16 @@
+<div class="container">
+  <ng-container *ngIf="!!image; else noImage">
+    <img
+      [src]="image.src | safeResourceUrl"
+      [alt]="image.file.name"
+      height="600"
+    />
+  </ng-container>
+  <ng-template #noImage> Select Upload Image button </ng-template>
+  <button class="btn btn-primary" (click)="inputFile.click()">
+    Upload Image
+  </button>
+  <button class="btn btn-success" (click)="onSave()">Save Image</button>
+</div>
+
+<input #inputFile (change)="handleInput($event)" type="file" hidden="true" />
