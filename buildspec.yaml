@@ -22,14 +22,7 @@ phases:
   build:
     commands:
       - echo Building...
-      - |
-        npm run build --prefix ./${PROJECT_ANGULAR_NAME} \
-        IDENTITY_POOL_ID=${IDENTITY_POOL_ID} \
-        COGNITO_REGION=${COGNITO_REGION} \
-        USERPOOL_ID=${USERPOOL_ID} \
-        USERPOOL_WEBCLIENT_ID=${USERPOOL_WEBCLIENT_ID} \
-        S3_STORAGE_NAME=${S3_STORAGE_NAME} \
-        S3_STORAGE_REGION=${S3_STORAGE_REGION}
+      - npm run build --prefix ./${PROJECT_ANGULAR_NAME}
 
   post_build:
     commands:
