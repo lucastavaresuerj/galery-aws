@@ -19,7 +19,6 @@ export class SigninComponent implements OnInit {
   constructor(private auth: AuthServiceService, private router: Router) {}
 
   async onSubmit() {
-    console.log(this.form.value);
     try {
       await this.auth.signIn(this.form.value);
       this.router.navigateByUrl('/');

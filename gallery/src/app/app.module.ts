@@ -17,6 +17,7 @@ import { AuthPageComponent } from './pages/auth-page/auth-page.component';
 import { MainPageComponent } from './pages/main-page/main-page.component';
 
 import { AuthServiceService } from './services/auth-service/auth-service.service';
+import { NavComponent } from './nav/nav.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { AuthServiceService } from './services/auth-service/auth-service.service
     AuthPageComponent,
     MainPageComponent,
     InputImageComponent,
+    NavComponent,
   ],
   imports: [
     AmplifyModule,

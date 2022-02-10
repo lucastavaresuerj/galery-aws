@@ -59,9 +59,8 @@ export class AuthServiceService implements CanActivate {
   async signIn({ username, password }: any) {
     try {
       const user = await Auth.signIn(username, password);
-      console.log(user);
+      this.isAuthenticated = true;
       return user;
-      // this.isAuthenticated = true;
     } catch (error: any) {
       console.log('error signing in', error);
       if (error.name == 'UserNotConfirmedException') {
