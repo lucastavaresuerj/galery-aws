@@ -41,7 +41,7 @@ Resources:
     Properties:
       DistributionConfig:
         CustomErrorResponses:
-          - ErrorCode: 403 # not found
+          - ErrorCode: 404 # not found
             ResponseCode: 200
             ResponsePagePath: "/index.html" # should start with "/"
         DefaultCacheBehavior:
