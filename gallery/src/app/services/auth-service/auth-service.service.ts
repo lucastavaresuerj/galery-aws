@@ -30,8 +30,7 @@ export class AuthServiceService implements CanActivate {
         username,
         password,
         attributes: {
-          email, // optional
-          // other custom attributes
+          email,
         },
       });
     } catch (error) {
@@ -39,7 +38,7 @@ export class AuthServiceService implements CanActivate {
     }
   }
 
-  async confirmSignUp({ username, code }: any) {
+  async confirmSignUp(username: string, code: string) {
     try {
       await Auth.confirmSignUp(username, code);
       this.isAuthenticated = true;
@@ -48,12 +47,26 @@ export class AuthServiceService implements CanActivate {
     }
   }
 
+  async resendConfirmationCode(username: string) {
+    try {
+      await Auth.resendSignUp(username);
+      console.log('code resent successfully');
+    } catch (err) {
+      console.log('error resending code: ', err);
+    }
+  }
+
   async signIn({ username, password }: any) {
     try {
       const user = await Auth.signIn(username, password);
-      this.isAuthenticated = true;
-    } catch (error) {
+      console.log(user);
+      return user;
+      // this.isAuthenticated = true;
+    } catch (error: any) {
       console.log('error signing in', error);
+      if (error.name == 'UserNotConfirmedException') {
+        throw error;
+      }
     }
   }
 }

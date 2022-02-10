@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-auth-page',
@@ -7,7 +8,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AuthPageComponent implements OnInit {
   active = 1;
-  constructor() {}
+  willConfirmSignUp = false;
+  user = '';
 
-  ngOnInit(): void {}
+  constructor(private route: ActivatedRoute) {}
+
+  ngOnInit(): void {
+    this.route.queryParams.subscribe({
+      next: (params) => {
+        console.log(params);
+        this.willConfirmSignUp = params['confirmSignUp'] == 'true';
+        this.user = params['user'];
+      },
+    });
+  }
 }

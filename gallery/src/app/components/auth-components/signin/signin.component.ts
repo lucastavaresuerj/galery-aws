@@ -14,6 +14,8 @@ export class SigninComponent implements OnInit {
     password: new FormControl(''),
   });
 
+  isUserNotConfirmed = false;
+
   constructor(private auth: AuthServiceService, private router: Router) {}
 
   async onSubmit() {
@@ -21,7 +23,10 @@ export class SigninComponent implements OnInit {
     try {
       await this.auth.signIn(this.form.value);
       this.router.navigateByUrl('/');
-    } catch (err) {
+    } catch (err: any) {
+      if (err.name == 'UserNotConfirmedException') {
+        this.isUserNotConfirmed = true;
+      }
       console.error(err);
     }
   }

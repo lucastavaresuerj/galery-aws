@@ -1,25 +1,40 @@
 <div class="container">
   <div class="row d-flex justify-content-center height-100vh">
     <div class="col-4" [style.marginTop]="'20%'">
-      <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
-        <li [ngbNavItem]="1">
-          <a ngbNavLink>Sign Up</a>
-          <ng-template ngbNavContent>
-            <app-signup></app-signup>
-          </ng-template>
-        </li>
-        <li [ngbNavItem]="2">
-          <a ngbNavLink>Sign In</a>
-          <ng-template ngbNavContent>
-            <app-signin></app-signin>
-          </ng-template>
-        </li>
-      </ul>
-
-      <div
-        [ngbNavOutlet]="nav"
-        class="border-top-0 border rounded-bottom rounded-2"
-      ></div>
+      <ng-container *ngIf="!willConfirmSignUp; else confirmSignup">
+        <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
+          <li [ngbNavItem]="1">
+            <a ngbNavLink>Sign In</a>
+            <ng-template ngbNavContent>
+              <app-signin></app-signin>
+            </ng-template>
+          </li>
+          <li [ngbNavItem]="2">
+            <a ngbNavLink>Sign Up</a>
+            <ng-template ngbNavContent>
+              <app-signup></app-signup>
+            </ng-template>
+          </li>
+        </ul>
+        <div
+          [ngbNavOutlet]="nav"
+          class="border rounded-bottom border-top-0"
+        ></div>
+      </ng-container>
+      <ng-template #confirmSignup>
+        <ul ngbNav #nav="ngbNav" class="nav-tabs">
+          <li ngbNavItem>
+            <a ngbNavLink>Confirm Sign Up</a>
+            <ng-template ngbNavContent>
+              <app-confirm-signup [username]="user"></app-confirm-signup>
+            </ng-template>
+          </li>
+        </ul>
+        <div
+          [ngbNavOutlet]="nav"
+          class="border rounded-bottom border-top-0"
+        ></div>
+      </ng-template>
     </div>
   </div>
 </div>

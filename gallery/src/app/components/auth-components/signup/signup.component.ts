@@ -18,8 +18,11 @@ export class SignupComponent implements OnInit {
     {
       username: new FormControl('', [Validators.required]),
       email: new FormControl('', [Validators.required]),
-      password: new FormControl('', [Validators.required]),
-      confirmPassword: new FormControl('', [Validators.required]),
+      password: new FormControl('', [Validators.required, Validators.min(8)]),
+      confirmPassword: new FormControl('', [
+        Validators.required,
+        Validators.min(8),
+      ]),
     },
     { validators: this.checkPassword }
   );
@@ -39,9 +42,12 @@ export class SignupComponent implements OnInit {
 
   async onSubmit() {
     console.log(this.form);
+
     try {
-      // await this.auth.signUp(this.form.value);
-      // this.router.navigateByUrl('/');
+      await this.auth.signUp(this.form.value);
+      this.router.navigate(['/auth'], {
+        queryParams: { confirmSignUp: 'true', email: this.form.value.email },
+      });
     } catch (err) {
       console.error(err);
     }

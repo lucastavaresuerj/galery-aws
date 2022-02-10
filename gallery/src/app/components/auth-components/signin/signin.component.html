@@ -20,7 +20,20 @@
       />
     </div>
     <div class="d-flex justify-content-center mb-3">
-      <button type="submit" class="btn btn-primary">Sign Up</button>
+      <button type="submit" class="btn btn-primary">Sign In</button>
+    </div>
+    <div *ngIf="isUserNotConfirmed" class="d-flex justify-content-center mb-3">
+      <a
+        class="btn btn-primary"
+        [routerLink]="['/auth']"
+        [queryParams]="{
+          user: form.value.username,
+          confirmSignUp: true,
+          resend: true
+        }"
+      >
+        Send confirmation code
+      </a>
     </div>
   </form>
 </div>
