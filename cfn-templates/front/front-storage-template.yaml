@@ -42,8 +42,8 @@ Resources:
       DistributionConfig:
         CustomErrorResponses:
           - ErrorCode: 403 # not found
-            ResponseCode: 404
-            ResponsePagePath: "/index.html"
+            ResponseCode: 200
+            ResponsePagePath: "/index.html" # should start with "/"
         DefaultCacheBehavior:
           AllowedMethods:
             - GET
@@ -62,7 +62,7 @@ Resources:
           MaxTTL: 86400 # in seconds
           MinTTL: 60 # in seconds
           TargetOriginId: s3origin
-          ViewerProtocolPolicy: "allow-all"
+          ViewerProtocolPolicy: "redirect-to-https"
         DefaultRootObject: "index.html"
         Enabled: true
         HttpVersion: http2
