@@ -1,0 +1,14 @@
+@use "variables.scss" as v;
+
+.search {
+  .icon {
+    position: fixed;
+    top: 16px;
+  }
+  input {
+    width: 100%;
+    margin-left: 20px;
+    border: unset;
+    background-color: v.$lightgray;
+  }
+}

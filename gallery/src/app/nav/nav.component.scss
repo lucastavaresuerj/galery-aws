@@ -1,3 +1,17 @@
+@use "variables.scss" as v;
+
 .nav {
   background-color: white;
+}
+
+.nav-link.home {
+  font-size: x-large;
+}
+
+input.search {
+  width: 100%;
+}
+
+.search-box {
+  background-color: v.$lightgray;
 }

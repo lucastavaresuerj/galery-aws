@@ -18,6 +18,8 @@ import { MainPageComponent } from './pages/main-page/main-page.component';
 
 import { AuthServiceService } from './services/auth-service/auth-service.service';
 import { NavComponent } from './nav/nav.component';
+import { SearchComponent } from './components/search/search.component';
+import { AddImageComponent } from './components/add-image/add-image.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +29,8 @@ import { NavComponent } from './nav/nav.component';
     MainPageComponent,
     InputImageComponent,
     NavComponent,
+    SearchComponent,
+    AddImageComponent,
   ],
   imports: [
     AmplifyModule,

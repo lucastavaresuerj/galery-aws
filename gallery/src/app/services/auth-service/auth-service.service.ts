@@ -18,6 +18,7 @@ export class AuthServiceService implements CanActivate {
   constructor(private router: Router) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+    return true;
     if (!this.isAuthenticated) {
       this.router.navigate(['/auth']);
     }
