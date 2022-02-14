@@ -7,16 +7,25 @@
         class="form-control"
         placeholder="name"
         formControlName="username"
+        [ngClass]="{ 'is-invalid': username.invalid }"
       />
+      <app-field-error
+        [message]="username.message"
+        [hidden]="!username.invalid"
+      >
+      </app-field-error>
     </div>
     <div class="mb-3">
       <label class="form-label">Email</label>
       <input
         type="email"
         class="form-control"
-        placeholder="name"
+        placeholder="user@email.com"
         formControlName="email"
+        [ngClass]="{ 'is-invalid': email.invalid }"
       />
+      <app-field-error [message]="email.message" [hidden]="!email.invalid">
+      </app-field-error>
     </div>
     <div class="mb-3">
       <label class="form-label">Password</label>
@@ -25,7 +34,13 @@
         class="form-control"
         placeholder="pa$$w0rD"
         formControlName="password"
+        [ngClass]="{ 'is-invalid': password.invalid }"
       />
+      <app-field-error
+        [message]="password.message"
+        [hidden]="!password.invalid"
+      >
+      </app-field-error>
     </div>
     <div class="mb-3">
       <label class="form-label">Confirm Password</label>
@@ -34,10 +49,21 @@
         class="form-control"
         placeholder="pa$$w0rD"
         formControlName="confirmPassword"
+        [ngClass]="{ 'is-invalid': confirmPassword.invalid }"
       />
+      <app-field-error
+        [message]="confirmPassword.message"
+        [hidden]="!confirmPassword.invalid"
+      >
+      </app-field-error>
     </div>
     <div class="d-flex justify-content-center mb-3">
-      <button type="submit" class="btn btn-primary">Sign Up</button>
+      <button type="submit" class="btn btn-primary">
+        Sign In
+        <div class="spinner-border spinner-border-sm" [hidden]="!hasSendSignin">
+          <span class="sr-only">Loading...</span>
+        </div>
+      </button>
     </div>
   </form>
 </div>

@@ -1,4 +1,9 @@
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import {
+  FormGroup,
+  FormControl,
+  Validators,
+  ValidationErrors,
+} from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { AuthServiceService } from 'src/app/services/auth-service/auth-service.service';
 import { Router } from '@angular/router';
@@ -6,6 +11,10 @@ import { Router } from '@angular/router';
 type Alert = {
   type: string;
   message: string;
+};
+
+type messages = {
+  [key: keyof ValidationErrors]: string;
 };
 
 @Component({
@@ -16,7 +25,10 @@ type Alert = {
 export class SigninComponent implements OnInit {
   form = new FormGroup({
     username: new FormControl('', Validators.required),
-    password: new FormControl('', Validators.required),
+    password: new FormControl('', [
+      Validators.required,
+      Validators.minLength(8),
+    ]),
   });
   isUserNotConfirmed = false;
   isUserNotFound = false;
@@ -25,8 +37,41 @@ export class SigninComponent implements OnInit {
 
   constructor(private auth: AuthServiceService, private router: Router) {}
 
+  get username() {
+    const username = this.form.get('username');
+    const messages: messages = {
+      required: "Username can't be empty",
+    };
+    const message = this.makeErrorMessage(username?.errors, messages);
+    return {
+      invalid: username?.status == 'INVALID' && username?.touched,
+      message,
+    };
+  }
+
+  get password() {
+    const password = this.form.get('password');
+    const messages: messages = {
+      required: "Password can't be empty",
+      minlength: 'Must have at least 8 characters',
+    };
+    const message = this.makeErrorMessage(password?.errors, messages);
+
+    return {
+      invalid: password?.status == 'INVALID' && password?.touched,
+      message,
+    };
+  }
+
   async onSubmit() {
     this.hasSendSignin = true;
+    if (!this.form.valid) {
+      this.addAlert({
+        type: 'warning',
+        message: 'You must complete all fields to sign in',
+      });
+      return;
+    }
     try {
       await this.auth.signIn(this.form.value);
       this.router.navigateByUrl('/');
@@ -44,15 +89,14 @@ export class SigninComponent implements OnInit {
       }
       console.error(err);
     }
-    this.hasSendSignin = true;
+    this.hasSendSignin = false;
   }
 
-  get username() {
-    return this.form.get('username');
-  }
-
-  get password() {
-    return this.form.get('password');
+  makeErrorMessage(
+    errors: ValidationErrors | null | undefined,
+    messages: messages
+  ) {
+    return errors ? messages[Object.keys(errors)[0]] : '';
   }
 
   addAlert(alert: Alert) {
