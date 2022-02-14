@@ -16,7 +16,6 @@ export class AuthPageComponent implements OnInit {
   ngOnInit(): void {
     this.route.queryParams.subscribe({
       next: (params) => {
-        console.log(params);
         this.willConfirmSignUp = params['confirmSignUp'] == 'true';
         this.user = params['user'];
       },

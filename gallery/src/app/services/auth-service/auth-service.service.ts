@@ -39,12 +39,8 @@ export class AuthServiceService implements CanActivate {
   }
 
   async confirmSignUp(username: string, code: string) {
-    try {
-      await Auth.confirmSignUp(username, code);
-      this.isAuthenticated = true;
-    } catch (error) {
-      console.log('error confirming sign up', error);
-    }
+    await Auth.confirmSignUp(username, code);
+    this.isAuthenticated = true;
   }
 
   async resendConfirmationCode(username: string) {

@@ -126,7 +126,7 @@ export class SignupComponent implements OnInit {
     try {
       await this.auth.signUp(this.form.value);
       this.router.navigate(['/auth'], {
-        queryParams: { confirmSignUp: 'true', email: this.form.value.email },
+        queryParams: { confirmSignUp: 'true', user: this.form.value.username },
       });
     } catch (err) {
       console.error(err);
