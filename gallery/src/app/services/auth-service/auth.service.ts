@@ -6,22 +6,28 @@ import {
   Router,
   UrlTree,
 } from '@angular/router';
-import { Observable } from 'rxjs';
-
 import { Auth } from 'aws-amplify';
+
+import { environment as env } from '@environment/environment';
 
 @Injectable({
   providedIn: 'root',
 })
-export class AuthServiceService implements CanActivate {
-  isAuthenticated = false;
+export class AuthService implements CanActivate {
+  private isAuthenticated = false;
   constructor(private router: Router) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    return true;
+    if (env.noLogging) {
+      return true;
+    }
     if (!this.isAuthenticated) {
       this.router.navigate(['/auth']);
     }
+    return this.isAuthenticated;
+  }
+
+  isAuth() {
     return this.isAuthenticated;
   }
 

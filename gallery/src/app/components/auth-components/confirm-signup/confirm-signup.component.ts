@@ -1,6 +1,6 @@
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component, Input, OnInit } from '@angular/core';
-import { AuthServiceService } from 'src/app/services/auth-service/auth-service.service';
+import { AuthService } from 'src/app/services/auth-service/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
@@ -15,7 +15,7 @@ export class ConfirmSignupComponent implements OnInit {
   @Input() username = '';
 
   constructor(
-    private auth: AuthServiceService,
+    private auth: AuthService,
     private router: Router,
     private activeRoute: ActivatedRoute
   ) {}

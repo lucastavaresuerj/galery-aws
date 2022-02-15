@@ -1,5 +1,12 @@
+@use "variables.scss" as v;
+
 :host::ng-deep {
   .height-100vh {
     height: 100vh;
+  }
+
+  .main-content {
+    background-color: v.$lightgray;
+    height: 100%;
   }
 }

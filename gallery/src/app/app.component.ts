@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Storage } from 'aws-amplify';
+import { AuthService } from './services/auth-service/auth.service';
 
 @Component({
   selector: 'app-root',

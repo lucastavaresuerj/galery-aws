@@ -21,7 +21,7 @@
   - date
   - name
   - size (of the original image)
-- The images metadata (including the use profile photo) should be storage at the DynamoDB along with the owner and the security (public, private)
-- The users should be able to upload images after the singin
-- The users should be able to remove images after the singin if he/she is the owner of the image
+- The images metadata (including the user profile photo) should be storage at the DynamoDB along with the owner and the security (public, private)
+- The users should be able to upload images after the signin
+- The users should be able to remove images after the signin if he/she is the owner of the image
 - The images metadata should be fetched from appSync

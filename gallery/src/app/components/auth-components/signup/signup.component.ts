@@ -7,7 +7,7 @@ import {
   ValidationErrors,
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthServiceService } from 'src/app/services/auth-service/auth-service.service';
+import { AuthService } from 'src/app/services/auth-service/auth.service';
 
 type messages = { [key: keyof ValidationErrors]: string };
 
@@ -34,7 +34,7 @@ export class SignupComponent implements OnInit {
   );
   hasSendSignin = false;
 
-  constructor(private auth: AuthServiceService, private router: Router) {}
+  constructor(private auth: AuthService, private router: Router) {}
 
   ngOnInit(): void {}
 

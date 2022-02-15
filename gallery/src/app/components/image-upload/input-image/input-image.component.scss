@@ -1,0 +1,12 @@
+@use "variables.scss" as v;
+
+.placeholder-image {
+  height: 50vh;
+  background-color: v.$lightgray;
+  .card {
+    height: 100%;
+    background-color: v.$lightgray;
+    border-style: dashed;
+    border-width: medium;
+  }
+}

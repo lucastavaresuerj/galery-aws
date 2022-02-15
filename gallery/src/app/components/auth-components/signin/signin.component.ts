@@ -5,7 +5,7 @@ import {
   ValidationErrors,
 } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
-import { AuthServiceService } from 'src/app/services/auth-service/auth-service.service';
+import { AuthService } from 'src/app/services/auth-service/auth.service';
 import { Router } from '@angular/router';
 
 type Alert = {
@@ -35,7 +35,7 @@ export class SigninComponent implements OnInit {
   hasSendSignin = false;
   alerts: Alert[] = [];
 
-  constructor(private auth: AuthServiceService, private router: Router) {}
+  constructor(private auth: AuthService, private router: Router) {}
 
   get username() {
     const username = this.form.get('username');
