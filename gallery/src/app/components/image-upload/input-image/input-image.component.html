@@ -1,26 +1,41 @@
-<div class="container" (dragover)="dragOver($event)" (drop)="dropFile($event)">
+<div
+  class="d-flex justify-content-center"
+  (dragover)="dragOver($event)"
+  (drop)="dropFile($event)"
+>
   <ng-container *ngIf="!!image; else noImage">
-    <img
-      [src]="image.src | safeResourceUrl"
-      [alt]="image.file.name"
-      height="600"
-    />
+    <div
+      class="image-displayer card justify-content-center rounded-xxlg border-color-none"
+    >
+      <div class="card-body">
+        <app-icon-button class="close-button" (click)="removeImage()">
+          <i icon class="fa-solid fa-trash"></i>
+        </app-icon-button>
+        <img [src]="image.src | safeResourceUrl" [alt]="image.file.name" />
+      </div>
+    </div>
   </ng-container>
   <ng-template #noImage>
-    <div class="placeholder-image card border-color-none">
+    <div
+      class="placeholder-image card pointer rounded-xxlg border-color-none"
+      (click)="inputFile.click()"
+    >
       <div class="card-body">
         <div class="card">
-          <div class="card-body">
-            <i class="fa-solid fa-upload"></i>
+          <div class="card-body upload-painel">
+            <div class="wrap-upload-icon">
+              <div class="rounded-circle bg-secondary bg-icon">
+                <i class="fas fa-upload fa-solid p-2"></i>
+              </div>
+            </div>
+            <div class="drag-message">
+              <p>Drag and drop or click to upload</p>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </ng-template>
-  <button class="btn btn-primary" (click)="inputFile.click()">
-    Upload Image
-  </button>
-  <button class="btn btn-success" (click)="onSave()">Save Image</button>
 </div>
 
 <input #inputFile (change)="handleInput($event)" type="file" hidden="true" />

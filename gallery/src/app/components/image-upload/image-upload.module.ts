@@ -4,6 +4,9 @@ import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 
+// Internal modules
+import { CommonComponentsModule } from '../common-components/common-components.module';
+
 // Pipes
 import { SafeUrlPipe } from 'src/app/pipes/safe-resource-url/safe-resource-url';
 
@@ -24,7 +27,12 @@ const exports: (any[] | Type<any>)[] | undefined = [ImageUploadComponent];
     SafeUrlPipe,
   ],
   exports: exports,
-  imports: [CommonModule, ReactiveFormsModule, RouterModule],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    RouterModule,
+    CommonComponentsModule,
+  ],
   providers: [ImageService],
 })
 export class ImageUploadModule {}

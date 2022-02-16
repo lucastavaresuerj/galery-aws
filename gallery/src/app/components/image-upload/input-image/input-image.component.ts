@@ -15,19 +15,19 @@ import { S3Service } from 'src/app/services/s3/s3.service';
 export class InputImageComponent implements OnInit, OnDestroy {
   image!: image;
 
-  @Output() addImage = new EventEmitter<image>();
+  @Output() changeImage = new EventEmitter<image>();
 
   constructor(private s3: S3Service) {}
 
   ngOnInit(): void {}
 
   ngOnDestroy() {
-    URL.revokeObjectURL(this.image.src);
+    this.image && URL.revokeObjectURL(this.image.src);
   }
 
-  onSave() {
-    this.s3.upload(this.image.file);
-  }
+  // onSave() {
+  //   this.s3.upload(this.image.file);
+  // }
 
   dragOver(event: MouseEvent) {
     event.preventDefault();
@@ -46,11 +46,16 @@ export class InputImageComponent implements OnInit, OnDestroy {
     this.uploadImage(file);
   }
 
-  uploadImage(image: File | undefined) {
+  removeImage() {
+    this.image = null;
+    this.changeImage.emit(this.image);
+  }
+
+  uploadImage(image?: File | undefined) {
     if (image) {
       this.image = { file: image, src: URL.createObjectURL(image) };
     }
-    this.addImage.emit(this.image);
+    this.changeImage.emit(this.image);
     console.log(image);
   }
 }

@@ -11,6 +11,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AmplifyModule } from './amplify/amplify.module';
 import { AuthComponentsModule } from './components/auth-components/auth-components.module';
 import { ImageUploadModule } from './components/image-upload/image-upload.module';
+import { CommonComponentsModule } from './components/common-components/common-components.module';
 
 // Services
 import { AuthService } from './services/auth-service/auth.service';
@@ -23,7 +24,7 @@ import { UploadPageComponent } from './pages/upload-page/upload-page.component';
 
 // Components
 import { AppComponent } from './app.component';
-import { NavComponent } from './nav/nav.component';
+import { NavComponent } from './components/nav/nav.component';
 import { SearchComponent } from './components/search/search.component';
 import { AddImageComponent } from './components/add-image/add-image.component';
 
@@ -34,8 +35,8 @@ import { AddImageComponent } from './components/add-image/add-image.component';
     MainPageComponent,
     NavComponent,
     SearchComponent,
-    AddImageComponent,
     UploadPageComponent,
+    AddImageComponent,
   ],
   imports: [
     AmplifyModule,
@@ -45,6 +46,7 @@ import { AddImageComponent } from './components/add-image/add-image.component';
     AppRoutingModule,
     AuthComponentsModule,
     ImageUploadModule,
+    CommonComponentsModule,
   ],
   providers: [AuthService, S3Service],
   bootstrap: [AppComponent],

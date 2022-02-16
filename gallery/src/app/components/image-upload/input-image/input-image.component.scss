@@ -1,12 +1,64 @@
 @use "variables.scss" as v;
 
+$image-height: 50vh;
+
 .placeholder-image {
-  height: 50vh;
+  height: $image-height;
+  width: 100%;
   background-color: v.$lightgray;
+
   .card {
     height: 100%;
     background-color: v.$lightgray;
     border-style: dashed;
     border-width: medium;
+  }
+
+  .upload-painel {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+
+    .bg-icon {
+      width: min-content;
+      i {
+        color: v.$lightgray;
+      }
+    }
+
+    .wrap-upload-icon {
+      align-self: center;
+      i {
+        font-size: 30px;
+        position: relative;
+        top: -2px;
+      }
+    }
+
+    .drag-message {
+      align-self: center;
+      padding: 2rem;
+    }
+  }
+}
+
+.image-displayer {
+  background-color: v.$lightgray;
+  width: fit-content;
+
+  .card-body {
+    .close-button {
+      position: relative;
+      right: 67px;
+      float: right;
+      margin-right: 1.25rem;
+      top: 0.5rem;
+    }
+
+    img {
+      max-height: calc($image-height - 4vh);
+      width: 100%;
+      object-fit: scale-down;
+    }
   }
 }
