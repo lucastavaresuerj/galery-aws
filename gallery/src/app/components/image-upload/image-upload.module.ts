@@ -16,6 +16,7 @@ import { ImageService } from 'src/app/services/image/image.service';
 // Components
 import { ImageUploadComponent } from './image-upload.component';
 import { DragImageComponent } from './drag-image/drag-image.component';
+import { FormImageComponent } from './form-image/form-image.component';
 
 const exports: (any[] | Type<any>)[] | undefined = [ImageUploadComponent];
 
@@ -25,6 +26,7 @@ const exports: (any[] | Type<any>)[] | undefined = [ImageUploadComponent];
     ImageUploadComponent,
     DragImageComponent,
     SafeUrlPipe,
+    FormImageComponent,
   ],
   exports: exports,
   imports: [
