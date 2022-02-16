@@ -5,9 +5,7 @@
         <div class="container p-5">
           <div class="row">
             <div class="col-6">
-              <app-input-image
-                (changeImage)="addImage($event)"
-              ></app-input-image>
+              <app-drag-image (changeImage)="addImage($event)"></app-drag-image>
             </div>
             <div class="col-6">col</div>
           </div>

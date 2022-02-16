@@ -8,11 +8,11 @@ import {
 import { S3Service } from 'src/app/services/s3/s3.service';
 
 @Component({
-  selector: 'app-input-image',
-  templateUrl: './input-image.component.html',
-  styleUrls: ['./input-image.component.scss'],
+  selector: 'app-drag-image',
+  templateUrl: './drag-image.component.html',
+  styleUrls: ['./drag-image.component.scss'],
 })
-export class InputImageComponent implements OnInit, OnDestroy {
+export class DragImageComponent implements OnInit, OnDestroy {
   image!: image;
 
   @Output() changeImage = new EventEmitter<image>();
