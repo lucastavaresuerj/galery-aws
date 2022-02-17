@@ -15,7 +15,7 @@ import { S3Service } from 'src/app/services/s3/s3.service';
 export class DragImageComponent implements OnInit, OnDestroy {
   image!: image;
 
-  @Output() changeImage = new EventEmitter<image>();
+  @Output() imageChange = new EventEmitter<image>();
 
   constructor(private s3: S3Service) {}
 
@@ -24,10 +24,6 @@ export class DragImageComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.image && URL.revokeObjectURL(this.image.src);
   }
-
-  // onSave() {
-  //   this.s3.upload(this.image.file);
-  // }
 
   dragOver(event: MouseEvent) {
     event.preventDefault();
@@ -41,21 +37,19 @@ export class DragImageComponent implements OnInit, OnDestroy {
   }
 
   handleInput(event: Event) {
-    console.log(event);
     const file = (event.target as HTMLInputElement).files?.[0];
     this.uploadImage(file);
   }
 
   removeImage() {
     this.image = null;
-    this.changeImage.emit(this.image);
+    this.imageChange.emit(this.image);
   }
 
   uploadImage(image?: File | undefined) {
     if (image) {
       this.image = { file: image, src: URL.createObjectURL(image) };
     }
-    this.changeImage.emit(this.image);
-    console.log(image);
+    this.imageChange.emit(this.image);
   }
 }
