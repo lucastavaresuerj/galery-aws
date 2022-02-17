@@ -1,0 +1,28 @@
+@use "variables.scss" as v;
+
+@mixin outline {
+  outline: none;
+  border: 0px;
+  border-bottom: 1px;
+  border-bottom-color: darken(v.$lightgray, 30%);
+  border-bottom-style: inset;
+}
+
+input,
+textarea {
+  width: 100%;
+  color: darken(v.$lightgray, 60%);
+}
+
+input[name="title"] {
+  @include outline;
+
+  font-size: xx-large;
+}
+
+textarea[name="description"] {
+  @include outline;
+
+  resize: vertical;
+  overflow-y: hidden;
+}

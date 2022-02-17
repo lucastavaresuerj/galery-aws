@@ -9,9 +9,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 // Interal modules
 import { AppRoutingModule } from './app-routing.module';
 import { AmplifyModule } from './amplify/amplify.module';
-import { AuthComponentsModule } from './components/auth-components/auth-components.module';
-import { ImageUploadModule } from './components/image-upload/image-upload.module';
-import { CommonComponentsModule } from './components/common-components/common-components.module';
+import { AuthComponentsModule } from './modules/auth-components/auth-components.module';
+import { ImageUploadModule } from './modules/image-upload/image-upload.module';
+import { CommonComponentsModule } from './modules/common-components/common-components.module';
 
 // Services
 import { AuthService } from './services/auth-service/auth.service';
