@@ -14,12 +14,10 @@
   }
   &:focus + .counter-message {
     display: block;
-    //color: darken(v.$lightgray, 40%);
     font-size: 100%;
     .counter {
       position: relative;
       float: right;
-      //color: black;
     }
   }
 }

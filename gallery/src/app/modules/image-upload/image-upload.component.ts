@@ -13,13 +13,19 @@ export class ImageUploadComponent implements OnInit {
 
   ngOnInit(): void {}
 
+  get canSave() {
+    return (this.image && this.imageForm && true) || false;
+  }
+
   addImage(image: image) {
     this.image = image;
-    console.log(image);
   }
 
   formChange(values: imageForm) {
     this.imageForm = values;
-    console.log(values);
+  }
+
+  save() {
+    console.log('saved');
   }
 }

@@ -10,7 +10,13 @@
             <div class="col-6 image-form">
               <div class="row h-25">
                 <div class="col centralize">
-                  <button class="btn btn-primary save-button">Save</button>
+                  <button
+                    class="btn btn-primary save-button"
+                    [disabled]="!canSave"
+                    (click)="save()"
+                  >
+                    Save
+                  </button>
                 </div>
               </div>
               <div class="row h-75">
