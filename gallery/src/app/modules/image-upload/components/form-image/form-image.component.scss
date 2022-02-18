@@ -8,21 +8,31 @@
   border-bottom-style: inset;
 }
 
-input,
+@mixin counter-message {
+  & + .counter-message {
+    display: none;
+  }
+  &:focus + .counter-message {
+    display: block;
+    //color: darken(v.$lightgray, 40%);
+    font-size: 100%;
+    .counter {
+      position: relative;
+      float: right;
+      //color: black;
+    }
+  }
+}
+
 textarea {
+  @include outline;
+  @include counter-message;
+
   width: 100%;
   color: darken(v.$lightgray, 60%);
-}
-
-input[name="title"] {
-  @include outline;
-
-  font-size: xx-large;
-}
-
-textarea[name="description"] {
-  @include outline;
-
   resize: vertical;
-  overflow-y: hidden;
+}
+
+textarea[name="title"] {
+  font-size: xx-large;
 }

@@ -1,8 +1,9 @@
 @use "variables.scss" as v;
 
 .search {
+  position: unset;
   .icon {
-    position: fixed;
+    position: absolute;
     top: 18px;
   }
   input {

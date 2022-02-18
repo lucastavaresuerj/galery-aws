@@ -10,9 +10,6 @@ import { CommonComponentsModule } from '../common-components/common-components.m
 // Pipes
 import { SafeUrlPipe } from 'src/app/pipes/safe-resource-url/safe-resource-url';
 
-// Services
-import { ImageService } from 'src/app/services/image/image.service';
-
 // Components
 import { ImageUploadComponent } from './image-upload.component';
 import { DragImageComponent } from './components/drag-image/drag-image.component';
@@ -35,6 +32,5 @@ const exports: (any[] | Type<any>)[] | undefined = [ImageUploadComponent];
     RouterModule,
     CommonComponentsModule,
   ],
-  providers: [ImageService],
 })
 export class ImageUploadModule {}

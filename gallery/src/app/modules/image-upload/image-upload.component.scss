@@ -1,6 +1,21 @@
 .image-upload {
   .card {
-    height: 60vh;
+    height: fit-content;
     width: 100%;
   }
+  .image-form {
+    height: fit-content;
+  }
+}
+
+.centralize {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.save-button {
+  width: inherit;
+  margin: 1.25rem;
 }

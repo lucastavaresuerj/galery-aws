@@ -7,17 +7,17 @@
             <div class="col-6">
               <app-drag-image (imageChange)="addImage($event)"></app-drag-image>
             </div>
-            <div class="col-6">
-              <div class="row">
+            <div class="col-6 image-form">
+              <div class="row h-25">
+                <div class="col centralize">
+                  <button class="btn btn-primary save-button">Save</button>
+                </div>
+              </div>
+              <div class="row h-75">
                 <div class="col">
                   <app-form-image
                     (formChange)="formChange($event)"
                   ></app-form-image>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col">
-                  <button class="btn btn-primary">save</button>
                 </div>
               </div>
             </div>

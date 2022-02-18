@@ -1,8 +1,28 @@
+<ng-template #counter let-message let-counter="counter" let-isValid="isValid">
+  <div class="counter-message" [ngClass]="{ 'invalid-feedback': !isValid }">
+    <p class="counter">{{ counter }}</p>
+    <p>{{ message }}</p>
+  </div>
+</ng-template>
+
 <div class="container">
   <form [formGroup]="form">
     <div class="row">
       <div class="col">
-        <input name="title" formControlName="title" placeholder="Image Title" />
+        <textarea
+          name="title"
+          formControlName="title"
+          placeholder="Image Title"
+          autoExpand
+          [min-rows]="1"
+          [max-rows]="4"
+          rows="1"
+          wrap="soft"
+        >
+        </textarea>
+        <ng-container
+          *ngTemplateOutlet="counter; context: titleContext"
+        ></ng-container>
       </div>
     </div>
     <div class="row mt-5">
@@ -13,10 +33,13 @@
           placeholder="Image description"
           autoExpand
           [min-rows]="1"
-          [max-rows]="10"
+          [max-rows]="13"
           rows="1"
           wrap="soft"
         ></textarea>
+        <ng-container
+          *ngTemplateOutlet="counter; context: descContext"
+        ></ng-container>
       </div>
     </div>
   </form>
