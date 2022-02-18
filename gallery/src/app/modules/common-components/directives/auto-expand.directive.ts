@@ -19,13 +19,6 @@ export class AutoExpandDirective implements OnInit {
     );
   }
 
-  // resizeVerticaly(ev: KeyboardEvent) {
-  //   const el = this.el.nativeElement as HTMLElement;
-  //   el.style.height = `${el.scrollHeight}px`;
-  //   console.log(el.style.height);
-  //   return;
-  // }
-
   getBaseScroll(el: HTMLElement) {
     if (!this.baseScroll) {
       const value = el.getAttribute('value') || '';
@@ -39,14 +32,16 @@ export class AutoExpandDirective implements OnInit {
     const el = this.el.nativeElement as HTMLElement;
 
     this.getBaseScroll(el);
-    const fontSize = window.getComputedStyle(el).getPropertyValue('font-size');
-    const fontSizeNumber = parseFloat(fontSize.replace(/(\d+).*/g, '$1'));
+    const lineHeight = window
+      .getComputedStyle(el)
+      .getPropertyValue('line-height');
+    const lineHeightNumber = parseFloat(lineHeight);
 
     el.setAttribute('rows', `${this.minRows}`);
     const scrollHeight = el.scrollHeight;
 
     const rows = Math.floor(
-      (scrollHeight - this.baseScroll) / (fontSizeNumber * 1.4)
+      (scrollHeight - this.baseScroll) / lineHeightNumber
     );
 
     const newRows = rows + this.minRows;
