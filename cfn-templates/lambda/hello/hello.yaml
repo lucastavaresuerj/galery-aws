@@ -8,7 +8,7 @@ Parameters:
   S3BucketCodePath:
     Type: String
     Description: The s3 bucket Path where the zip code is
-    Default: cfn-templates/lambda/hello/hello.zip
+    Default: cfn-templates/lambda/hello/function.zip
 
 Resources:
   LambdaRole:
@@ -32,7 +32,10 @@ Resources:
           - Sid: LogGroup
             Effect: Allow
             Action: "logs:CreateLogGroup"
-            Resource: "arn:aws:logs:${region}:${account}:*"
+            Resource: !Sub
+              - "arn:aws:logs:${region}:${account}:*"
+              - region: !Ref "AWS::Region"
+                account: !Ref "AWS::AccountId"
           - Sid: LogEvents
             Effect: Allow
             Action:
