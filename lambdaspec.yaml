@@ -4,8 +4,10 @@ env:
   variables:
     S3_BUCKET_IMAGE: ""
     STACK_NAME: ""
+    S3_BUCKET_DEPLOY: ""
 
 phases:
   build:
     commands:
-      -
+      - cd scripts
+      - sudo ./deploy-lambdas.sh

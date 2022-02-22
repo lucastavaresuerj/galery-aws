@@ -172,6 +172,16 @@ Resources:
         S3StorageName: !GetAtt StorageS3OnlineGallery.Outputs.BucketName
         S3StorageRegion: !GetAtt StorageS3OnlineGallery.Outputs.Region
 
+  CodeBuildDeployLambda:
+    Type: "AWS::CloudFormation::Stack"
+    Properties:
+      TemplateURL: !Sub "https://s3.amazonaws.com/${DeploymentBucket}/cfn-templates/build/lambdabuild-template.yaml"
+      Parameters:
+        S3BucketDeploy: !Ref DeploymentBucket
+        S3BucketImage: !GetAtt FrontStorageOnlineGallery.Outputs.S3BucketName
+        MainStackName: !Ref "AWS::StackName"
+        MainStackID: !Ref "AWS::StackId"
+
   UpdateRolesWithIDPFunction:
     DependsOn:
       - AuthRole
