@@ -18,4 +18,8 @@ phases:
   build:
     run-as: root
     commands:
-      - ./scripts/deploy-lambdas.sh
+      - |
+        S3_BUCKET_IMAGE=${S3_BUCKET_IMAGE} \
+        STACK_NAME=${STACK_NAME} \
+        S3_BUCKET_DEPLOY=${S3_BUCKET_DEPLOY} \
+        ./scripts/deploy-lambdas.sh

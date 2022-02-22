@@ -2,6 +2,6 @@ cd lambda
 
 for folder in *; do
   cd ${folder}
-  ./deploy.sh
+  FUNC_NAME=${folder} ./deploy.sh
   cd ../
 done
