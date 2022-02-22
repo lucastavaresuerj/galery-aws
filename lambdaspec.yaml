@@ -18,5 +18,4 @@ phases:
   build:
     run-as: root
     commands:
-      - cd scripts
-      - ./deploy-lambdas.sh
+      - ./scripts/deploy-lambdas.sh
