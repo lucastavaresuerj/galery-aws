@@ -1,0 +1,11 @@
+version: 0.2
+
+env:
+  variables:
+    S3_BUCKET_IMAGE: ""
+    STACK_NAME: ""
+
+phases:
+  build:
+    commands:
+      -
