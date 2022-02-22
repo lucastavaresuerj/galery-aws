@@ -7,7 +7,16 @@ env:
     S3_BUCKET_DEPLOY: ""
 
 phases:
+  install:
+    run-as: root
+    runtime-versions:
+      python: 3.8
+    commands:
+      - pip install aws-sam-cli
+      - sam --version
+
   build:
+    run-as: root
     commands:
       - cd scripts
-      - sudo ./deploy-lambdas.sh
+      - ./deploy-lambdas.sh
