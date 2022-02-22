@@ -69,12 +69,12 @@ Resources:
   CodeBuilProject:
     Type: "AWS::CodeBuild::Project"
     Properties:
-      Name: !Sub "${AWS::StackName}-template"
+      Name: !Sub "${AWS::StackName}-lambda"
       ServiceRole: !GetAtt CodeBuildServiceRole.Arn
       Source:
         Type: GITHUB
         Location: !Sub "https://github.com/${GitHubOwner}/${GitHubRepository}.git"
-        BuildSpec: templatespec.yaml
+        BuildSpec: lambdaspec.yaml
       Artifacts:
         Type: NO_ARTIFACTS
       Triggers:
