@@ -5,7 +5,7 @@ exports.lambdaHandler = async (event, context) => {
     response = {
       statusCode: 200,
       body: JSON.stringify({
-        message: "S3 new message",
+        message: `S3 new message from ${s3.bucket.name}`,
       }),
     };
   } catch (err) {
