@@ -31,9 +31,9 @@ Resources:
             SqsSubscription: true
 
 Outputs:
-  ResizeImageFunction:
+  ResizeImage:
     Description: "Lambda Function ARN"
-    Value: !GetAtt ResizeImageFunction.Arn
-  ResizeImageFunctionIamRole:
+    Value: !GetAtt ResizeImage.Arn
+  ResizeImageIamRole:
     Description: "Implicit IAM Role created for the function"
-    Value: !GetAtt ResizeImageFunctionRole.Arn
+    Value: !GetAtt ResizeImageRole.Arn
