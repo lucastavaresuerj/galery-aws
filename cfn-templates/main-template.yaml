@@ -135,6 +135,7 @@ Resources:
     Properties:
       TemplateURL: !Sub "https://s3.amazonaws.com/${DeploymentBucket}/cfn-templates/storage/image-storage-template.yaml"
       Parameters:
+        s3BucketName: !Sub "image-storage-${AWS::StackName}-${AWS::StackId}"
         selectedGuestPermissions: "s3:GetObject,s3:ListBucket"
         selectedAuthenticatedPermissions: "s3:PutObject,s3:GetObject,s3:ListBucket,s3:DeleteObject"
         unauthRoleName: !Ref UnauthRoleName

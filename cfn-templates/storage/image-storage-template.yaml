@@ -3,6 +3,9 @@ Description: Bucket for image storage (basically)
 AWSTemplateFormatVersion: 2010-09-09
 
 Parameters:
+  s3BucketName:
+    Type: String
+    Default: image-storage
   authRoleName:
     Type: String
   unauthRoleName:
@@ -103,8 +106,9 @@ Resources:
     UpdateReplacePolicy: Retain
     DeletionPolicy: Retain
     DependsOn:
-      - S3SnsCreateObject
+      - SNSTopicPolicy
     Properties:
+      BucketName: !Ref s3BucketName
       CorsConfiguration:
         CorsRules:
           - AllowedHeaders:
@@ -145,7 +149,7 @@ Resources:
     Type: "AWS::SNS::TopicPolicy"
     Properties:
       PolicyDocument:
-        Id: MyTopicPolicy
+        Id: S3Publish
         Version: 2012-10-17
         Statement:
           - Sid: Statement-id
@@ -156,7 +160,7 @@ Resources:
             Resource: !Ref SNSTopic
             Condition:
               ArnLike:
-                "aws:SourceArn": !GetAtt S3Bucket.Arn
+                "aws:SourceArn": !Sub "arn:aws:s3:::${s3BucketName}"
       Topics:
         - !Ref S3SnsCreateObject
 
