@@ -157,7 +157,7 @@ Resources:
             Principal:
               Service: s3.amazonaws.com
             Action: "sns:Publish"
-            Resource: !Ref SNSTopic
+            Resource: !Ref S3SnsCreateObject
             Condition:
               ArnLike:
                 "aws:SourceArn": !Sub "arn:aws:s3:::${s3BucketName}"
