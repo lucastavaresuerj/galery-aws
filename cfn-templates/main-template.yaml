@@ -179,6 +179,7 @@ Resources:
       Parameters:
         S3BucketDeploy: !Ref DeploymentBucket
         S3BucketImage: !GetAtt FrontStorageOnlineGallery.Outputs.S3BucketName
+        S3BucketImageSNSPut: !GetAtt FrontStorageOnlineGallery.Outputs.S3SNSTopicArn
         MainStackName: !Ref "AWS::StackName"
         MainStackID: !Ref "AWS::StackId"
 

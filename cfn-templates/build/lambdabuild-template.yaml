@@ -4,6 +4,8 @@ Parameters:
   S3BucketImage:
     Type: String
     AllowedPattern: "[A-Za-z0-9-]+"
+  S3BucketImageSNSPut:
+    Type: String
   S3BucketDeploy:
     Type: String
     AllowedPattern: "[A-Za-z0-9-]+"
@@ -95,6 +97,8 @@ Resources:
             Value: !Ref MainStackName
           - Name: S3_BUCKET_IMAGE
             Value: !Ref S3BucketImage
+          - Name: S3_BUCKET_IMAGE_SNS
+            Value: !Ref S3BucketImageSNSPut
           - Name: S3_BUCKET_DEPLOY
             Value: !Ref S3BucketDeploy
 

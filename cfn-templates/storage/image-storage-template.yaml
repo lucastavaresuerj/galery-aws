@@ -1,6 +1,7 @@
-Description: >-
-  {"createdOn":"Linux","createdBy":"Amplify","createdWith":"7.6.5","stackType":"storage-S3","metadata":{}}
+Description: Bucket for image storage (basically)
+
 AWSTemplateFormatVersion: 2010-09-09
+
 Parameters:
   authRoleName:
     Type: String
@@ -51,6 +52,7 @@ Parameters:
   selectedAuthenticatedPermissions:
     Type: CommaDelimitedList
     Default: NONE
+
 Conditions:
   CreateAuthPublic: !Not
     - !Equals
@@ -84,15 +86,22 @@ Conditions:
     - !Equals
       - !Ref GuestAllowList
       - DISALLOW
+
 Outputs:
   BucketName:
     Description: Bucket name for the S3 bucket
     Value: !Ref S3Bucket
   Region:
     Value: !Ref "AWS::Region"
+  S3SNSTopicArn:
+    Description: The SNS topic to objects created at bucket
+    Value: !Ref S3SnsCreateObject
+
 Resources:
   S3Bucket:
     Type: "AWS::S3::Bucket"
+    UpdateReplacePolicy: Retain
+    DeletionPolicy: Retain
     Properties:
       CorsConfiguration:
         CorsRules:
@@ -117,8 +126,19 @@ Resources:
         ServerSideEncryptionConfiguration:
           - ServerSideEncryptionByDefault:
               SSEAlgorithm: AES256
-    UpdateReplacePolicy: Retain
-    DeletionPolicy: Retain
+      NotificationConfiguration:
+        TopicConfigurations:
+          - Topic: !Ref S3SnsCreateObject
+            Event: "s3:ObjectCreated:*"
+            Filter:
+              S3Key:
+                Rules:
+                  - Name: prefix
+                    Value: original-size
+
+  S3SnsCreateObject:
+    Type: AWS::SNS::Topic
+
   S3AuthPublicPolicy:
     Type: "AWS::IAM::Policy"
     Properties:
@@ -141,6 +161,7 @@ Resources:
     DependsOn:
       - S3Bucket
     Condition: CreateAuthPublic
+
   S3AuthProtectedPolicy:
     Type: "AWS::IAM::Policy"
     Properties:
@@ -163,6 +184,7 @@ Resources:
     DependsOn:
       - S3Bucket
     Condition: CreateAuthProtected
+
   S3AuthPrivatePolicy:
     Type: "AWS::IAM::Policy"
     Properties:
@@ -185,6 +207,7 @@ Resources:
     DependsOn:
       - S3Bucket
     Condition: CreateAuthPrivate
+
   S3AuthUploadPolicy:
     Type: "AWS::IAM::Policy"
     Properties:
@@ -207,6 +230,7 @@ Resources:
     DependsOn:
       - S3Bucket
     Condition: CreateAuthUploads
+
   S3GuestPublicPolicy:
     Type: "AWS::IAM::Policy"
     Properties:
@@ -229,6 +253,7 @@ Resources:
     DependsOn:
       - S3Bucket
     Condition: CreateGuestPublic
+
   S3AuthReadPolicy:
     Type: "AWS::IAM::Policy"
     Properties:
@@ -263,6 +288,7 @@ Resources:
     DependsOn:
       - S3Bucket
     Condition: AuthReadAndList
+
   S3GuestReadPolicy:
     Type: "AWS::IAM::Policy"
     Properties:
