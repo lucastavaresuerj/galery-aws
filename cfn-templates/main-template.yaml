@@ -135,7 +135,7 @@ Resources:
     Properties:
       TemplateURL: !Sub "https://s3.amazonaws.com/${DeploymentBucket}/cfn-templates/storage/image-storage-template.yaml"
       Parameters:
-        s3BucketName: !Sub "image-storage-${AWS::StackName}-${AWS::StackId}"
+        s3BucketName: !Sub "${AWS::StackName}-image-storage-${AWS::AccountId}"
         selectedGuestPermissions: "s3:GetObject,s3:ListBucket"
         selectedAuthenticatedPermissions: "s3:PutObject,s3:GetObject,s3:ListBucket,s3:DeleteObject"
         unauthRoleName: !Ref UnauthRoleName
@@ -179,7 +179,7 @@ Resources:
       TemplateURL: !Sub "https://s3.amazonaws.com/${DeploymentBucket}/cfn-templates/build/lambdabuild-template.yaml"
       Parameters:
         S3BucketDeploy: !Ref DeploymentBucket
-        S3BucketImage: !GetAtt StorageS3OnlineGallery.Outputs.S3BucketName
+        S3BucketImage: !GetAtt StorageS3OnlineGallery.Outputs.BucketName
         S3BucketImageSNSPut: !GetAtt StorageS3OnlineGallery.Outputs.S3SNSTopicArn
         MainStackName: !Ref "AWS::StackName"
         MainStackID: !Ref "AWS::StackId"
