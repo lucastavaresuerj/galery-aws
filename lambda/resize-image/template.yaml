@@ -63,6 +63,23 @@ Resources:
               - region: !Ref "AWS::Region"
                 account: !Ref "AWS::AccountId"
                 lambda: !Ref ResizeImage
+          - Sid: SqsEvents
+            Effect: "Allow"
+            Action:
+              - "sqs:SendMessage"
+              - "sqs:DeleteMessage"
+              - "sqs:ChangeMessageVisibility"
+              - "sqs:ReceiveMessage"
+              - "sqs:TagQueue"
+              - "sqs:UntagQueue"
+              - "sqs:PurgeQueue"
+            Resource: !Sub
+              - "arn:aws:sqs:${region}:${account}:YOUR_QUEUE_NAME"
+              - region: !Ref "AWS::Region"
+                account: !Ref "AWS::AccountId"
+                lambda: !Ref ResizeImage.DestinationQueue
+
+  # Criar um recurso de Sqs e adicioná-lo ao SqsSubscription: https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/sam-specification-generated-resources-function.html#sam-specification-generated-resources-function-sqs-onsuccess
 
   ResizeImage:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
