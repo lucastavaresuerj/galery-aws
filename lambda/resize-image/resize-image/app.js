@@ -14,8 +14,12 @@ exports.handler = async (event, context, callback) => {
     util.inspect(event, { depth: 5 })
   );
 
-  const snsMessage = JSON.parse(event[0].Sns.Message);
-  const s3Event = snsMessage.Records[0].s3;
+  const sqsBody = JSON.parse(event.Records[0].body);
+  // console.log("sqsBody", sqsBody);
+  const sqsBodyMessage = JSON.parse(sqsBody.Message);
+  // console.log("sqsBodyMessage", sqsBodyMessage);
+  const s3Event = sqsBodyMessage.Records[0].s3;
+  // console.log("s3Event", s3Event);
 
   const srcBucket = s3Event.bucket.name;
   // Object key may have spaces or unicode non-ASCII characters.
