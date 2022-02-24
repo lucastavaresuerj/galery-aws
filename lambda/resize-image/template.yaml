@@ -29,7 +29,7 @@ Resources:
             Principal:
               Service:
                 - lambda.amazonaws.com
-       Policies:
+      Policies:
         - PolicyName: !Sub "${AWS::StackName}-lambda-role"
           PolicyDocument:
             Version: "2012-10-17"
@@ -39,7 +39,6 @@ Resources:
                   - "s3:*"
                   - "s3-object-lambda:*"
                 Resource: !Sub "arn:aws:s3:::${S3StorageBucketName}*"
-
 
   ResizeImage:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
