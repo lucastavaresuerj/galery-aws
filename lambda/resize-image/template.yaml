@@ -8,6 +8,8 @@ Description: >
 Parameters:
   S3SNSTopic:
     Type: String
+  S3StorageBucketName:
+    Type: String
 
 # More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
 Globals:
@@ -15,9 +17,34 @@ Globals:
     Timeout: 3
 
 Resources:
+  LambdaRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Action:
+              - sts:AssumeRole
+            Effect: Allow
+            Principal:
+              Service:
+                - lambda.amazonaws.com
+       Policies:
+        - PolicyName: !Sub "${AWS::StackName}-lambda-role"
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - "s3:*"
+                  - "s3-object-lambda:*"
+                Resource: !Sub "arn:aws:s3:::${S3StorageBucketName}*"
+
+
   ResizeImage:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
+      Role: !Ref LambdaRole
       CodeUri: resize-image/
       Handler: app.handler
       Runtime: nodejs12.x
@@ -35,5 +62,5 @@ Outputs:
     Description: "Lambda Function ARN"
     Value: !GetAtt ResizeImage.Arn
   ResizeImageIamRole:
-    Description: "Implicit IAM Role created for the function"
-    Value: !GetAtt ResizeImageRole.Arn
+    Description: "IAM Role created for the function"
+    Value: !Ref LambdaRole
