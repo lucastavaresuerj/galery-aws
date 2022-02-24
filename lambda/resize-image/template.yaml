@@ -48,7 +48,10 @@ Resources:
           - Sid: LogGroup
             Effect: Allow
             Action: "logs:CreateLogGroup"
-            Resource: "arn:aws:logs:${region}:${account}:*"
+            Resource: !Sub
+              - "arn:aws:logs:${region}:${account}:*"
+              - region: !Ref "AWS::Region"
+                account: !Ref "AWS::AccountId"
           - Sid: LogEvents
             Effect: Allow
             Action:
@@ -59,7 +62,8 @@ Resources:
                 arn:aws:logs:${region}:${account}:log-group:/aws/lambda/${lambda}:*
               - region: !Ref "AWS::Region"
                 account: !Ref "AWS::AccountId"
-                lambda: !Ref Lambda
+                lambda: !Ref ResizeImage
+
   ResizeImage:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
