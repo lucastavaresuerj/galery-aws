@@ -74,10 +74,10 @@ Resources:
               - "sqs:UntagQueue"
               - "sqs:PurgeQueue"
             Resource: !Sub
-              - "arn:aws:sqs:${region}:${account}:YOUR_QUEUE_NAME"
+              - "arn:aws:sqs:${region}:${account}:${destSqs}"
               - region: !Ref "AWS::Region"
                 account: !Ref "AWS::AccountId"
-                lambda: !Ref ResizeImage.DestinationQueue
+                destSqs: !GetAtt ResizeImage.DestinationQueue
 
   # Criar um recurso de Sqs e adicioná-lo ao SqsSubscription: https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/sam-specification-generated-resources-function.html#sam-specification-generated-resources-function-sqs-onsuccess
 
