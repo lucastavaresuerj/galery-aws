@@ -8,14 +8,15 @@ const sharp = require("sharp");
 const s3 = new AWS.S3();
 
 exports.handler = async (event, context, callback) => {
-  const snsMessage = JSON.parse(event.Records[0].Sns.Message);
-  const s3Event = snsMessage.Records[0].s3;
-
   // Read options from the event parameter.
   console.log(
     "Reading options from event:\n",
     util.inspect(event, { depth: 5 })
   );
+
+  const snsMessage = JSON.parse(event[0].Sns.Message);
+  const s3Event = snsMessage.Records[0].s3;
+
   const srcBucket = s3Event.bucket.name;
   // Object key may have spaces or unicode non-ASCII characters.
   const srcKey = decodeURIComponent(s3Event.object.key.replace(/\+/g, " "));
