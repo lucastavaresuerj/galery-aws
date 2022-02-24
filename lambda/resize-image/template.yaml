@@ -47,12 +47,12 @@ Resources:
           - Effect: "Allow"
             Action: "logs:CreateLogGroup"
             Resource: !Sub "arn:aws:logs:region:${AWS::AccountId}:*"
-          - Effect": "Allow",
+          - Effect": "Allow"
             Action":
               - "logs:CreateLogStream"
               - "logs:PutLogEvents"
-            Resource": 
-                - !Sub "arn:aws:logs:region:accountID:log-group:/aws/lambda/${ResizeImage}:*"
+            Resource":
+              - !Sub "arn:aws:logs:region:accountID:log-group:/aws/lambda/${ResizeImage}:*"
 
   ResizeImage:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
