@@ -30,22 +30,6 @@ Resources:
   #             Service:
   #               - lambda.amazonaws.com
 
-  PolicyS3:
-    Type: "AWS::IAM::Policy"
-    Properties:
-      PolicyName: !Sub "${AWS::StackName}-lambda-policy-s3"
-      Roles:
-        - !Ref ResizeImageRole # When the Role property of an AWS::Serverless::Function is not specified, AWS SAM generates an AWS::IAM::Role AWS CloudFormation resource: <function‑LogicalId>Role
-      PolicyDocument:
-        Version: "2012-10-17"
-        Statement:
-          - Sid: S3Events
-            Effect: Allow
-            Action:
-              - "s3:*"
-              - "s3-object-lambda:*"
-            Resource: !Sub "arn:aws:s3:::${S3StorageBucketName}*"
-
   # Policy:
   #   Type: "AWS::IAM::Policy"
   #   Properties:
@@ -74,7 +58,6 @@ Resources:
   ResizeImage:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
-      Role: !GetAtt LambdaRole.Arn
       CodeUri: resize-image/
       Handler: app.handler
       Runtime: nodejs12.x
@@ -87,6 +70,22 @@ Resources:
             Topic: !Ref S3SNSTopic
             SqsSubscription: true
 
+  PolicyS3:
+    Type: "AWS::IAM::Policy"
+    Properties:
+      PolicyName: !Sub "${AWS::StackName}-lambda-policy-s3"
+      Roles:
+        - !Ref ResizeImageRole # When the Role property of an AWS::Serverless::Function is not specified, AWS SAM generates an AWS::IAM::Role AWS CloudFormation resource: <function‑LogicalId>Role
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Sid: S3Events
+            Effect: Allow
+            Action:
+              - "s3:*"
+              - "s3-object-lambda:*"
+            Resource: !Sub "arn:aws:s3:::${S3StorageBucketName}*"
+
 Outputs:
   ResizeImageFunctionIamRole:
     Description: "Implicit IAM Role created for ResizeImage function"
@@ -94,6 +93,3 @@ Outputs:
   ResizeImageFunction:
     Description: "Lambda Function ARN"
     Value: !GetAtt ResizeImage.Arn
-  ResizeImageIamRole:
-    Description: "IAM Role created for the function"
-    Value: !Ref LambdaRole
