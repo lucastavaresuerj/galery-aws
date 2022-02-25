@@ -17,25 +17,25 @@ Globals:
     Timeout: 3
 
 Resources:
-  LambdaRole:
-    Type: AWS::IAM::Role
-    Properties:
-      AssumeRolePolicyDocument:
-        Version: 2012-10-17
-        Statement:
-          - Action:
-              - sts:AssumeRole
-            Effect: Allow
-            Principal:
-              Service:
-                - lambda.amazonaws.com
+  # LambdaRole:
+  #   Type: AWS::IAM::Role
+  #   Properties:
+  #     AssumeRolePolicyDocument:
+  #       Version: 2012-10-17
+  #       Statement:
+  #         - Action:
+  #             - sts:AssumeRole
+  #           Effect: Allow
+  #           Principal:
+  #             Service:
+  #               - lambda.amazonaws.com
 
-  Policy:
+  PolicyS3:
     Type: "AWS::IAM::Policy"
     Properties:
-      PolicyName: !Sub "${AWS::StackName}-lambda-policy"
+      PolicyName: !Sub "${AWS::StackName}-lambda-policy-s3"
       Roles:
-        - !Ref LambdaRole
+        - !Ref ResizeImageRole # When the Role property of an AWS::Serverless::Function is not specified, AWS SAM generates an AWS::IAM::Role AWS CloudFormation resource: <function‑LogicalId>Role
       PolicyDocument:
         Version: "2012-10-17"
         Statement:
@@ -45,41 +45,31 @@ Resources:
               - "s3:*"
               - "s3-object-lambda:*"
             Resource: !Sub "arn:aws:s3:::${S3StorageBucketName}*"
-          - Sid: LogGroup
-            Effect: Allow
-            Action: "logs:CreateLogGroup"
-            Resource: !Sub
-              - "arn:aws:logs:${region}:${account}:*"
-              - region: !Ref "AWS::Region"
-                account: !Ref "AWS::AccountId"
-          - Sid: LogEvents
-            Effect: Allow
-            Action:
-              - "logs:CreateLogStream"
-              - "logs:PutLogEvents"
-            Resource: !Sub
-              - >-
-                arn:aws:logs:${region}:${account}:log-group:/aws/lambda/${lambda}:*
-              - region: !Ref "AWS::Region"
-                account: !Ref "AWS::AccountId"
-                lambda: !Ref ResizeImage
-          - Sid: SqsEvents
-            Effect: "Allow"
-            Action:
-              - "sqs:SendMessage"
-              - "sqs:DeleteMessage"
-              - "sqs:ChangeMessageVisibility"
-              - "sqs:ReceiveMessage"
-              - "sqs:TagQueue"
-              - "sqs:UntagQueue"
-              - "sqs:PurgeQueue"
-            Resource: !Sub
-              - "arn:aws:sqs:${region}:${account}:${destSqs}"
-              - region: !Ref "AWS::Region"
-                account: !Ref "AWS::AccountId"
-                destSqs: !GetAtt ResizeImage.DestinationQueue
 
-  # Criar um recurso de Sqs e adicioná-lo ao SqsSubscription: https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/sam-specification-generated-resources-function.html#sam-specification-generated-resources-function-sqs-onsuccess
+  # Policy:
+  #   Type: "AWS::IAM::Policy"
+  #   Properties:
+  #     PolicyName: !Sub "${AWS::StackName}-lambda-policy-sqs"
+  #     Roles:
+  #       - !Ref ResizeImageRole
+  #     PolicyDocument:
+  #       Version: "2012-10-17"
+  #       Statement:
+  #         - Sid: SqsEvents
+  #           Effect: "Allow"
+  #           Action:
+  #             - "sqs:SendMessage"
+  #             - "sqs:DeleteMessage"
+  #             - "sqs:ChangeMessageVisibility"
+  #             - "sqs:ReceiveMessage"
+  #             - "sqs:TagQueue"
+  #             - "sqs:UntagQueue"
+  #             - "sqs:PurgeQueue"
+  #           Resource: !Sub
+  #             - "arn:aws:sqs:${region}:${account}:${destSqs}"
+  #             - region: !Ref "AWS::Region"
+  #               account: !Ref "AWS::AccountId"
+  #               destSqs: !GetAtt [ResizeImage, DestinationQueue]
 
   ResizeImage:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
@@ -98,7 +88,10 @@ Resources:
             SqsSubscription: true
 
 Outputs:
-  ResizeImage:
+  ResizeImageFunctionIamRole:
+    Description: "Implicit IAM Role created for ResizeImage function"
+    Value: !GetAtt ResizeImageRole.Arn
+  ResizeImageFunction:
     Description: "Lambda Function ARN"
     Value: !GetAtt ResizeImage.Arn
   ResizeImageIamRole:
