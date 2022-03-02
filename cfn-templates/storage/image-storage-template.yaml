@@ -139,8 +139,6 @@ Resources:
         TopicConfigurations:
           - Topic: !Ref S3SnsCreateObject
             Event: "s3:ObjectCreated:*"
-          - Topic: !Ref S3SnsDeleteObject
-            Event: "s3:ObjectRemoved:Delete"
 
   S3SnsCreateObject:
     Type: AWS::SNS::Topic
@@ -162,13 +160,11 @@ Resources:
             Action: "sns:Publish"
             Resource:
               - !Ref S3SnsCreateObject
-              - !Ref S3SnsDeleteObject
             Condition:
               ArnLike:
                 "aws:SourceArn": !Sub "arn:aws:s3:::${s3BucketName}"
       Topics:
         - !Ref S3SnsCreateObject
-        - !Ref S3SnsDeleteObject
 
   S3AuthPublicPolicy:
     Type: "AWS::IAM::Policy"
