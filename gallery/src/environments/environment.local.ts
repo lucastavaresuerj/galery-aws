@@ -2,7 +2,7 @@ import { env } from './secret';
 
 export const environment = {
   production: true,
-  noLogging: true,
+  noLoging: true,
   amplifyConfig: {
     Auth: {
       identityPoolId: env['IDENTITY_POOL_ID'], //REQUIRED - Amazon Cognito Identity Pool ID

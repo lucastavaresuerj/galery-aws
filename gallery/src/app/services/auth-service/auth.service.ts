@@ -18,7 +18,7 @@ export class AuthService implements CanActivate {
   constructor(private router: Router) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    if (env.noLogging) {
+    if (env.noLoging) {
       return true;
     }
     if (!this.isAuthenticated) {

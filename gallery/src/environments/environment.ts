@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  noLogging: false,
+  noLoging: false,
   amplifyConfig: {},
 };
 
