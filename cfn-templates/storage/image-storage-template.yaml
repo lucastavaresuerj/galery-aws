@@ -136,11 +136,6 @@ Resources:
         TopicConfigurations:
           - Topic: !Ref S3SnsCreateObject
             Event: "s3:ObjectCreated:*"
-            Filter:
-              S3Key:
-                Rules:
-                  - Name: prefix
-                    Value: original-size
 
   S3SnsCreateObject:
     Type: AWS::SNS::Topic
