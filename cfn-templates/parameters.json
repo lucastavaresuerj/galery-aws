@@ -6,5 +6,9 @@
   {
     "ParameterKey": "UnauthRoleName",
     "ParameterValue": "UnauthRoleName-gallery"
+  },
+  {
+    "ParameterKey": "S3SavesStackName",
+    "UsePreviousValue": true
   }
 ]
