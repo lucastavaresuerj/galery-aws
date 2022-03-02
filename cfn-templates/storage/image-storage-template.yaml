@@ -3,6 +3,8 @@ Description: Bucket for image storage (basically)
 AWSTemplateFormatVersion: 2010-09-09
 
 Parameters:
+  s3SavesBucketName:
+    Type: String
   s3BucketName:
     Type: String
     Default: image-storage
@@ -136,8 +138,13 @@ Resources:
         TopicConfigurations:
           - Topic: !Ref S3SnsCreateObject
             Event: "s3:ObjectCreated:*"
+          - Topic: !Ref S3SnsDeleteObject
+            Event: "s3:ObjectRemoved:Delete"
 
   S3SnsCreateObject:
+    Type: AWS::SNS::Topic
+
+  S3SnsDeleteObject:
     Type: AWS::SNS::Topic
 
   SNSTopicPolicy:
@@ -152,12 +159,15 @@ Resources:
             Principal:
               Service: s3.amazonaws.com
             Action: "sns:Publish"
-            Resource: !Ref S3SnsCreateObject
+            Resource:
+              - !Ref S3SnsCreateObject
+              - !Ref S3SnsDeleteObject
             Condition:
               ArnLike:
                 "aws:SourceArn": !Sub "arn:aws:s3:::${s3BucketName}"
       Topics:
         - !Ref S3SnsCreateObject
+        - !Ref S3SnsDeleteObject
 
   S3AuthPublicPolicy:
     Type: "AWS::IAM::Policy"
