@@ -1,5 +1,3 @@
-let response;
-
 const AWS = require("aws-sdk");
 const sharp = require("sharp");
 
@@ -79,13 +77,6 @@ exports.handler = async (event, context, callback) => {
   }
 
   console.log(
-    "Successfully resized " +
-      srcBucket +
-      "/" +
-      srcKey +
-      " and uploaded to " +
-      dstBucket +
-      "/" +
-      dstKey
+    `Successfully resized ${srcBucket}/${srcKey} and uploaded to ${dstBucket}/${dstKey}`
   );
 };
