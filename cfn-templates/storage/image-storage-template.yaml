@@ -137,36 +137,15 @@ Resources:
               SSEAlgorithm: AES256
       NotificationConfiguration:
         TopicConfigurations:
-          - Topic: !Ref S3SnsCreateObject
+          - Topic: !GetAtt SNSCreateObject.Outputs.S3SNSTopicArn
             Event: "s3:ObjectCreated:*"
 
-  S3SnsCreateObject:
-    Type: AWS::SNS::Topic
-
-  S3SnsDeleteObject:
-    Type: AWS::SNS::Topic
-
-  SNSTopicPolicy:
-    Type: "AWS::SNS::TopicPolicy"
+  SNSCreateObject:
+    Type: "AWS::CloudFormation::Stack"
     Properties:
-      PolicyDocument:
-        Id: S3Publish
-        Version: 2012-10-17
-        Statement:
-          - Sid: Statement-id
-            Effect: Allow
-            Principal:
-              Service: s3.amazonaws.com
-            Action: "sns:Publish"
-            Resource:
-              - !Ref S3SnsCreateObject
-              - !Ref S3SnsDeleteObject
-            Condition:
-              ArnLike:
-                "aws:SourceArn": !Sub "arn:aws:s3:::${s3BucketName}"
-      Topics:
-        - !Ref S3SnsCreateObject
-        - !Ref S3SnsDeleteObject
+      TemplateURL: !Sub "https://s3.amazonaws.com/${s3BucketName}/cfn-templates/notification/sns-template.yaml"
+      Parameters:
+        TargetBucketName: !Ref s3BucketName
 
   S3AuthPublicPolicy:
     Type: "AWS::IAM::Policy"
