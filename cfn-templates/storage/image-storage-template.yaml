@@ -99,9 +99,9 @@ Outputs:
     Value: !Ref S3Bucket
   Region:
     Value: !Ref "AWS::Region"
-  S3SNSTopicArn:
+  S3SNSCreateObjTopicArn:
     Description: The SNS topic to objects created at bucket
-    Value: !Ref S3SnsCreateObject
+    Value: !GetAtt SNSCreateObject.Outputs.S3SNSTopicArn
 
 Resources:
   S3Bucket:
@@ -109,7 +109,7 @@ Resources:
     UpdateReplacePolicy: Retain
     DeletionPolicy: Retain
     DependsOn:
-      - SNSTopicPolicy
+      - SNSCreateObject
     Properties:
       BucketName: !Ref s3BucketName
       CorsConfiguration:
