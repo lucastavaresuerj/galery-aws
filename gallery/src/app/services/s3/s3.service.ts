@@ -7,10 +7,10 @@ import { Storage } from 'aws-amplify';
 export class S3Service {
   constructor() {}
 
-  async upload(file: File) {
+  async upload(file: File, level: 'private' | 'public') {
     try {
       await Storage.put(file.name, file, {
-        level: 'private',
+        level: level,
       });
     } catch (error) {
       console.log('Error uploading file: ', error);
