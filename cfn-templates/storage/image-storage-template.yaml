@@ -5,6 +5,7 @@ AWSTemplateFormatVersion: 2010-09-09
 Parameters:
   s3SavesBucketName:
     Type: String
+    Default: NONE
   s3BucketName:
     Type: String
     Default: image-storage
