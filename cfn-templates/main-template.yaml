@@ -10,6 +10,8 @@ Parameters:
     Type: String
     Default: UnAuthRoleName-gallery
     Description: Name of the common deployment bucket provided by the parent stack
+  S3SavesStackName:
+    Type: String
 
 Outputs:
   Region:
@@ -29,9 +31,8 @@ Outputs:
       Name: !Sub "${AWS::StackName}-StackId"
   DeploymentBucketName:
     Description: CloudFormation provider root stack deployment bucket name
-    Value: !Ref DeploymentBucket
-    Export:
-      Name: !Sub "${AWS::StackName}-DeploymentBucketName"
+    Value:
+      Fn::ImportValue: !Sub "${S3SavesStackName}-BucketName"
   AuthRoleArn:
     Value: !GetAtt
       - AuthRole
@@ -46,15 +47,6 @@ Outputs:
     Value: !Ref UnauthRole
 
 Resources:
-  DeploymentBucket:
-    Type: "AWS::S3::Bucket"
-    Properties:
-      BucketEncryption:
-        ServerSideEncryptionConfiguration:
-          - ServerSideEncryptionByDefault:
-              SSEAlgorithm: AES256
-    UpdateReplacePolicy: Retain
-    DeletionPolicy: Retain
   AuthRole:
     Type: "AWS::IAM::Role"
     Properties:
@@ -66,7 +58,7 @@ Resources:
             Principal:
               Federated: cognito-identity.amazonaws.com
             Action: "sts:AssumeRoleWithWebIdentity"
-      RoleName: !Ref AuthRoleName
+      RoleName: !Sub "${AWS::Region}-${AWS::StackName}-${AuthRoleName}"
   UnauthRole:
     Type: "AWS::IAM::Role"
     Properties:
@@ -78,21 +70,28 @@ Resources:
             Principal:
               Federated: cognito-identity.amazonaws.com
             Action: "sts:AssumeRoleWithWebIdentity"
-      RoleName: !Ref UnauthRoleName
+      RoleName: !Sub "${AWS::Region}-${AWS::StackName}-${UnauthRoleName}"
 
   CodeBuildDeployTemplate:
     Type: "AWS::CloudFormation::Stack"
     Properties:
-      TemplateURL: !Sub "https://s3.amazonaws.com/${DeploymentBucket}/cfn-templates/build/templatebuild-template.yaml"
+      TemplateURL: !Sub
+        - "https://s3.amazonaws.com/${Bucket}/cfn-templates/build/templatebuild-template.yaml"
+        - Bucket:
+            Fn::ImportValue: !Sub "${S3SavesStackName}-BucketName"
       Parameters:
-        S3BucketDeploy: !Ref DeploymentBucket
+        S3BucketDeploy:
+          Fn::ImportValue: !Sub "${S3SavesStackName}-BucketName"
         MainStackName: !Ref "AWS::StackName"
         MainStackID: !Ref "AWS::StackId"
 
   AuthOnlineGallery:
     Type: "AWS::CloudFormation::Stack"
     Properties:
-      TemplateURL: !Sub "https://s3.amazonaws.com/${DeploymentBucket}/cfn-templates/auth/auth-template.yaml"
+      TemplateURL: !Sub
+        - "https://s3.amazonaws.com/${Bucket}/cfn-templates/auth/auth-template.yaml"
+        - Bucket:
+            Fn::ImportValue: !Sub "${S3SavesStackName}-BucketName"
       Parameters:
         allowUnauthenticatedIdentities: true
         autoVerifiedAttributes: email
@@ -133,13 +132,16 @@ Resources:
   StorageS3OnlineGallery:
     Type: "AWS::CloudFormation::Stack"
     Properties:
-      TemplateURL: !Sub "https://s3.amazonaws.com/${DeploymentBucket}/cfn-templates/storage/image-storage-template.yaml"
+      TemplateURL: !Sub
+        - "https://s3.amazonaws.com/${Bucket}/cfn-templates/storage/image-storage-template.yaml"
+        - Bucket:
+            Fn::ImportValue: !Sub "${S3SavesStackName}-BucketName"
       Parameters:
         s3BucketName: !Sub "${AWS::StackName}-image-storage-${AWS::AccountId}"
         selectedGuestPermissions: "s3:GetObject,s3:ListBucket"
         selectedAuthenticatedPermissions: "s3:PutObject,s3:GetObject,s3:ListBucket,s3:DeleteObject"
-        unauthRoleName: !Ref UnauthRoleName
-        authRoleName: !Ref AuthRoleName
+        unauthRoleName: !Ref UnauthRole
+        authRoleName: !Ref AuthRole
         s3PrivatePolicy: Private_policy_onlineimages
         s3ProtectedPolicy: Protected_policy_onlineimages
         s3PublicPolicy: Public_policy_onlineimages
@@ -157,13 +159,19 @@ Resources:
   FrontStorageOnlineGallery:
     Type: "AWS::CloudFormation::Stack"
     Properties:
-      TemplateURL: !Sub "https://s3.amazonaws.com/${DeploymentBucket}/cfn-templates/front/front-storage-template.yaml"
+      TemplateURL: !Sub
+        - "https://s3.amazonaws.com/${Bucket}/cfn-templates/front/front-storage-template.yaml"
+        - Bucket:
+            Fn::ImportValue: !Sub "${S3SavesStackName}-BucketName"
 
   # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/quickref-cloudformation.html
   CodeBuildOnlineGallery:
     Type: "AWS::CloudFormation::Stack"
     Properties:
-      TemplateURL: !Sub "https://s3.amazonaws.com/${DeploymentBucket}/cfn-templates/build/codebuild-template.yaml"
+      TemplateURL: !Sub
+        - "https://s3.amazonaws.com/${Bucket}/cfn-templates/build/codebuild-template.yaml"
+        - Bucket:
+            Fn::ImportValue: !Sub "${S3SavesStackName}-BucketName"
       Parameters:
         S3BucketWebSite: !GetAtt FrontStorageOnlineGallery.Outputs.S3BucketName
         IdentityPoolId: !GetAtt AuthOnlineGallery.Outputs.IdentityPoolId
@@ -176,9 +184,13 @@ Resources:
   CodeBuildDeployLambda:
     Type: "AWS::CloudFormation::Stack"
     Properties:
-      TemplateURL: !Sub "https://s3.amazonaws.com/${DeploymentBucket}/cfn-templates/build/lambdabuild-template.yaml"
+      TemplateURL: !Sub
+        - "https://s3.amazonaws.com/${Bucket}/cfn-templates/build/lambdabuild-template.yaml"
+        - Bucket:
+            Fn::ImportValue: !Sub "${S3SavesStackName}-BucketName"
       Parameters:
-        S3BucketDeploy: !Ref DeploymentBucket
+        S3BucketDeploy:
+          Fn::ImportValue: !Sub "${S3SavesStackName}-BucketName"
         S3BucketImage: !GetAtt StorageS3OnlineGallery.Outputs.BucketName
         S3BucketImageSNSPut: !GetAtt StorageS3OnlineGallery.Outputs.S3SNSTopicArn
         MainStackName: !Ref "AWS::StackName"
