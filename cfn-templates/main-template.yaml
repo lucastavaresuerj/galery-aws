@@ -137,6 +137,8 @@ Resources:
         - Bucket:
             Fn::ImportValue: !Sub "${S3SavesStackName}-BucketName"
       Parameters:
+        s3SavesBucketName:
+          Fn::ImportValue: !Sub "${S3SavesStackName}-BucketName"
         s3BucketName: !Sub "${AWS::StackName}-image-storage-${AWS::AccountId}"
         selectedGuestPermissions: "s3:GetObject,s3:ListBucket"
         selectedAuthenticatedPermissions: "s3:PutObject,s3:GetObject,s3:ListBucket,s3:DeleteObject"
