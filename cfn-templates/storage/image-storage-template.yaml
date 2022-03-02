@@ -143,7 +143,7 @@ Resources:
   SNSCreateObject:
     Type: "AWS::CloudFormation::Stack"
     Properties:
-      TemplateURL: !Sub "https://s3.amazonaws.com/${s3BucketName}/cfn-templates/notification/sns-template.yaml"
+      TemplateURL: !Sub "https://s3.amazonaws.com/${s3SavesBucketName}/cfn-templates/notification/sns-template.yaml"
       Parameters:
         TargetBucketName: !Ref s3BucketName
 
