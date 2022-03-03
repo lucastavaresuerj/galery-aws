@@ -108,8 +108,6 @@ Resources:
     Type: "AWS::S3::Bucket"
     UpdateReplacePolicy: Retain
     DeletionPolicy: Retain
-    DependsOn:
-      - SNSCreateObject
     Properties:
       BucketName: !Ref s3BucketName
       CorsConfiguration:
