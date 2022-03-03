@@ -139,8 +139,17 @@ Resources:
         TopicConfigurations:
           - Topic: !GetAtt SNSCreateObject.Outputs.S3SNSTopicArn
             Event: "s3:ObjectCreated:*"
+          - Topic: !GetAtt SNSDeleteObject.Outputs.S3SNSTopicArn
+            Event: "s3:ObjectRemoved:Delete"
 
   SNSCreateObject:
+    Type: "AWS::CloudFormation::Stack"
+    Properties:
+      TemplateURL: !Sub "https://s3.amazonaws.com/${s3SavesBucketName}/cfn-templates/notification/sns-template.yaml"
+      Parameters:
+        TargetBucketName: !Ref s3BucketName
+
+  SNSDeleteObject:
     Type: "AWS::CloudFormation::Stack"
     Properties:
       TemplateURL: !Sub "https://s3.amazonaws.com/${s3SavesBucketName}/cfn-templates/notification/sns-template.yaml"
