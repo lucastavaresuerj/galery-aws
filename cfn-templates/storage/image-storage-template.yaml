@@ -189,7 +189,7 @@ Resources:
           Resource:
             - !Sub
               - "arn:aws:s3:::${S3Bucket}/protected/${cognitoId}/*"
-              - cognitoId: cognito-identity.amazonaws.com:sub
+              - cognitoId: "${cognito-identity.amazonaws.com:sub}"
       PolicyName: !Ref s3ProtectedPolicy
       Roles:
         - !Ref authRoleName
@@ -210,7 +210,7 @@ Resources:
           Resource:
             - !Sub
               - "arn:aws:s3:::${S3Bucket}/private/${cognitoId}/*"
-              - cognitoId: cognito-identity.amazonaws.com:sub
+              - cognitoId: "${cognito-identity.amazonaws.com:sub}"
       PolicyName: !Ref s3PrivatePolicy
       Roles:
         - !Ref authRoleName
