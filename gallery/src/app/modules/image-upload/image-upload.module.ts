@@ -6,6 +6,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 // Internal modules
 import { CommonComponentsModule } from '../common-components/common-components.module';
+import { AmplifyModule } from '../../amplify/amplify.module';
 
 // Pipes
 import { SafeUrlPipe } from 'src/app/pipes/safe-resource-url/safe-resource-url';
@@ -31,6 +32,7 @@ const exports: (any[] | Type<any>)[] | undefined = [ImageUploadComponent];
     ReactiveFormsModule,
     RouterModule,
     CommonComponentsModule,
+    AmplifyModule,
   ],
 })
 export class ImageUploadModule {}

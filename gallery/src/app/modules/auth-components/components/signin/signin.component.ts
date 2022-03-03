@@ -80,7 +80,8 @@ export class SigninComponent implements OnInit {
         this.isUserNotConfirmed = true;
         this.addAlert({
           type: 'warning',
-          message: "You don't confirm your code send to your e-mail",
+          message:
+            "You didn't confirmed your code yet, please, resend to your e-mail",
         });
       }
       if (err.name == 'UserNotFoundException') {

@@ -20,6 +20,7 @@ const routes: Routes = [
   {
     path: 'upload',
     component: UploadPageComponent,
+    canActivate: [AuthService],
   },
 ];
 
