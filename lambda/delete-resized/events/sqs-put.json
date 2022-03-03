@@ -1,0 +1,20 @@
+{
+  "Records": [
+    {
+      "messageId": "19dd0b57-b21e-4ac1-bd88-01bbb068cb78",
+      "receiptHandle": "MessageReceiptHandle",
+      "body": "{\n  \"Type\" : \"Notification\",\n  \"MessageId\" : \"1fefe663-bc4b-5dfe-a704-bcf21c0be4fb\",\n  \"TopicArn\" : \"arn:aws:sns:us-east-1:868112351099:online-gallery-StorageS3OnlineGallery-1RNBWKSSNK9RK-S3SnsCreateObject-1821366LLCTT3\",\n  \"Subject\" : \"Amazon S3 Notification\",\n  \"Message\" : \"{\\\"Records\\\":[{\\\"eventVersion\\\":\\\"2.1\\\",\\\"eventSource\\\":\\\"aws:s3\\\",\\\"awsRegion\\\":\\\"us-east-1\\\",\\\"eventTime\\\":\\\"2022-02-24T15:02:22.746Z\\\",\\\"eventName\\\":\\\"ObjectCreated:Put\\\",\\\"userIdentity\\\":{\\\"principalId\\\":\\\"AWS:AIDA4UH4HH554H4URPBVP\\\"},\\\"requestParameters\\\":{\\\"sourceIPAddress\\\":\\\"179.55.12.156\\\"},\\\"responseElements\\\":{\\\"x-amz-request-id\\\":\\\"1JNFQVGQH36S211V\\\",\\\"x-amz-id-2\\\":\\\"uhwVT/w3SMrzyalMqTB6ds+BRYyKNRrnCqVlJbx9vcAw9OA83V9+tPkuRn1MMMRtB+KbPIt453ibus2XLGB/XaNoaAMILSTf\\\"},\\\"s3\\\":{\\\"s3SchemaVersion\\\":\\\"1.0\\\",\\\"configurationId\\\":\\\"6a5bf403-44a2-4526-a6c1-8288febeda2b\\\",\\\"bucket\\\":{\\\"name\\\":\\\"main-stack-gallery-online-image-storage-868112351099\\\",\\\"ownerIdentity\\\":{\\\"principalId\\\":\\\"A1MWDXHH39E12V\\\"},\\\"arn\\\":\\\"arn:aws:s3:::main-stack-gallery-online-image-storage-868112351099\\\"},\\\"object\\\":{\\\"key\\\":\\\"public/original-size-photo-1641194255129-bd39dd8112de.jpeg\\\",\\\"size\\\":95174,\\\"eTag\\\":\\\"3193c7bb6d28096caaaea3d946fb75c5\\\",\\\"sequencer\\\":\\\"0062179DFEA124A381\\\"}}}]}\",\n  \"Timestamp\" : \"2022-02-24T15:02:24.075Z\",\n  \"SignatureVersion\" : \"1\",\n  \"Signature\" : \"m0zXZnZs8OuAk1qTH3ndq07HNs7UFe9GXYr0YESFTPSHG1BimAhoM9DTHtnl8I32Z34owaLzP7grZi1HYO0QtujfyJsbr79htVV12MOuuX1KHIJ/z4yb/aMfA9lywM034Gj24cCChl8VTBhMlg+WRA+ID2bF07lrZnvBxaicKqwS2gFSQy/BLHdWrszUCgaNF0BUfmZ1evHeSzQLPh13n7m83umIvcx0cGRkd9A7goSfL5orYZkBjrvZbnqGFACDl2WFwLTrv4yxn+2fE3hl+mmjjCVMLfendcO2G7PReYLj3fe6bbrk67ZHf/IgE2ZRo4uZ6JY9GaS7PYFfsfD8zA==\",\n  \"SigningCertURL\" : \"https://sns.us-east-1.amazonaws.com/SimpleNotificationService-7ff5318490ec183fbaddaa2a969abfda.pem\",\n  \"UnsubscribeURL\" : \"https://sns.us-east-1.amazonaws.com/?Action=Unsubscribe&SubscriptionArn=arn:aws:sns:us-east-1:868112351099:online-gallery-StorageS3OnlineGallery-1RNBWKSSNK9RK-S3SnsCreateObject-1821366LLCTT3:3cd08fab-c820-4f31-b0ca-83db8a1eb266\"\n}",
+      "attributes": {
+        "ApproximateReceiveCount": "1",
+        "SentTimestamp": "1523232000000",
+        "SenderId": "123456789012",
+        "ApproximateFirstReceiveTimestamp": "1523232000001"
+      },
+      "messageAttributes": {},
+      "md5OfBody": "7b270e59b47ff90a553787216d55d91d",
+      "eventSource": "aws:sqs",
+      "eventSourceARN": "arn:aws:sqs:us-east-1:123456789012:MyQueue",
+      "awsRegion": "us-east-1"
+    }
+  ]
+}

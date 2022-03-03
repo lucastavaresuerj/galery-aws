@@ -1,0 +1,21 @@
+{
+  "Records": [
+    {
+      "EventSource": "aws:sns",
+      "EventVersion": "1.0",
+      "EventSubscriptionArn": "arn:aws:sns:us-east-1::ExampleTopic",
+      "Sns": {
+        "Type": "Notification",
+        "MessageId": "807ee0cb-7626-5009-88d2-ba5bfaa97b22",
+        "TopicArn": "arn:aws:sns:us-east-1:868112351099:online-gallery-StorageS3OnlineGallery-1RNBWKSSNK9RK-S3SnsCreateObject-1821366LLCTT3",
+        "Subject": "Amazon S3 Notification",
+        "Message": "{\"Records\":[{\"eventVersion\":\"2.1\",\"eventSource\":\"aws:s3\",\"awsRegion\":\"us-east-1\",\"eventTime\":\"2022-02-23T19:26:05.816Z\",\"eventName\":\"ObjectCreated:Put\",\"userIdentity\":{\"principalId\":\"AWS:AIDA4UH4HH554H4URPBVP\"},\"requestParameters\":{\"sourceIPAddress\":\"179.55.12.156\"},\"responseElements\":{\"x-amz-request-id\":\"RQSFB6FA7423YFT7\",\"x-amz-id-2\":\"iwEzS0kwjyw28aGiK7UTNI21+jMSmQmT1R7l/MLaJp/ZdiXb1Tnu78q5wPfVxs8YZfyPDJXIcP6Ax8Np2uYaq+lurTTpbwKC\"},\"s3\":{\"s3SchemaVersion\":\"1.0\",\"configurationId\":\"6a5bf403-44a2-4526-a6c1-8288febeda2b\",\"bucket\":{\"name\":\"main-stack-gallery-online-image-storage-868112351099\",\"ownerIdentity\":{\"principalId\":\"A1MWDXHH39E12V\"},\"arn\":\"arn:aws:s3:::main-stack-gallery-online-image-storage-868112351099\"},\"object\":{\"key\":\"public/original-size-photo-1641456542081-75a30ca438c2.jpeg\",\"size\":114768,\"eTag\":\"08c8d4c373210907b6addd5a532ffb08\",\"sequencer\":\"0062168A4DAF24A265\"}}}]}",
+        "Timestamp": "2022-02-23T19:26:07.472Z",
+        "SignatureVersion": "1",
+        "Signature": "KnqFFIYEnmCw5rcW4cxLKlls7+J2A9joCBKyxsO5FrfocA/Q98Hef/O8k1JVrOKfr+hYWr4uVY9Bi4SXTET0uOafrbrbWh7KME7aLGFsUbxZswwRhPHsfwdo+2kpBYKBYzHIRy+j5GqM+oVPHhzMrsmaf083a9Xj3H03wT5GSFK/fMnAHB1YYhjR89gtM92cAMZaeot8R1ah9ony8So0OlKHC5a4hc5CpxBwcH1WjJGXXZGfigi7i3CVNG4nthYwOzgcFHojkutCcxLW5AwL0AUDiezErRv42lcKgN/KrpPrdHz7hQjme9AKxoz+6ERA6p23941r4QpBHHkdETxejg==",
+        "SigningCertURL": "https://sns.us-east-1.amazonaws.com/SimpleNotificationService-7ff5318490ec183fbaddaa2a969abfda.pem",
+        "UnsubscribeURL": "https://sns.us-east-1.amazonaws.com/?Action=Unsubscribe&SubscriptionArn=arn:aws:sns:us-east-1:868112351099:online-gallery-StorageS3OnlineGallery-1RNBWKSSNK9RK-S3SnsCreateObject-1821366LLCTT3:3cd08fab-c820-4f31-b0ca-83db8a1eb266"
+      }
+    }
+  ]
+}

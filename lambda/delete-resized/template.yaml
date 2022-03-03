@@ -1,7 +1,7 @@
 AWSTemplateFormatVersion: "2010-09-09"
 Transform: AWS::Serverless-2016-10-31
 Description: >
-  test-sam
+  delete-resized
 
   Sample SAM Template for test-sam
 
@@ -17,10 +17,10 @@ Globals:
     Timeout: 3
 
 Resources:
-  ResizeImage:
+  DeleteResized:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
-      CodeUri: resize-image/
+      CodeUri: delete-resized/
       Handler: app.handler
       Runtime: nodejs12.x
       Architectures:
@@ -37,7 +37,7 @@ Resources:
     Properties:
       PolicyName: !Sub "${AWS::StackName}-lambda-policy-s3"
       Roles:
-        - !Ref ResizeImageRole # When the Role property of an AWS::Serverless::Function is not specified, AWS SAM generates an AWS::IAM::Role AWS CloudFormation resource: <function‑LogicalId>Role
+        - !Ref DeleteResizedRole # When the Role property of an AWS::Serverless::Function is not specified, AWS SAM generates an AWS::IAM::Role AWS CloudFormation resource: <function‑LogicalId>Role
       PolicyDocument:
         Version: "2012-10-17"
         Statement:
@@ -49,9 +49,9 @@ Resources:
             Resource: !Sub "arn:aws:s3:::${S3StorageBucketName}*"
 
 Outputs:
-  ResizeImageFunctionIamRole:
-    Description: "Implicit IAM Role created for ResizeImage function"
-    Value: !GetAtt ResizeImageRole.Arn
-  ResizeImageFunction:
+  DeleteResizedFunctionIamRole:
+    Description: "Implicit IAM Role created for DeleteResized function"
+    Value: !GetAtt DeleteResizedRole.Arn
+  DeleteResizedFunction:
     Description: "Lambda Function ARN"
-    Value: !GetAtt ResizeImage.Arn
+    Value: !GetAtt DeleteResized.Arn
