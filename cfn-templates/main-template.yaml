@@ -195,6 +195,7 @@ Resources:
           Fn::ImportValue: !Sub "${S3SavesStackName}-BucketName"
         S3BucketImage: !GetAtt StorageS3OnlineGallery.Outputs.BucketName
         S3BucketImageSNSPut: !GetAtt StorageS3OnlineGallery.Outputs.S3SNSCreateObjTopicArn
+        S3BucketImageSNSDelete: !GetAtt StorageS3OnlineGallery.Outputs.S3SNSDeleteObjTopicArn
         MainStackName: !Ref "AWS::StackName"
         MainStackID: !Ref "AWS::StackId"
 

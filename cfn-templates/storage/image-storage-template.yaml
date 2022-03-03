@@ -102,6 +102,9 @@ Outputs:
   S3SNSCreateObjTopicArn:
     Description: The SNS topic to objects created at bucket
     Value: !GetAtt SNSCreateObject.Outputs.S3SNSTopicArn
+  S3SNSDeleteObjTopicArn:
+    Description: The SNS topic to objects deleted at bucket
+    Value: !GetAtt SNSDeleteObject.Outputs.S3SNSTopicArn
 
 Resources:
   S3Bucket:
