@@ -9,7 +9,7 @@
             </div>
             <div class="col-6 image-form">
               <div class="row h-25">
-                <div class="col centralize">
+                <div class="btn-group col centralize">
                   <button
                     class="btn btn-primary save-button"
                     [disabled]="!canSave"
@@ -17,6 +17,23 @@
                   >
                     Save
                   </button>
+                  <div
+                    class="btn-group"
+                    ngbDropdown
+                    role="group"
+                    aria-label="Button group with nested dropdown"
+                  >
+                    <button class="btn btn-outline-primary" ngbDropdownToggle>
+                      {{ security }}
+                    </button>
+                    <div class="dropdown-menu" ngbDropdownMenu>
+                      <ng-container *ngFor="let option of options">
+                        <button ngbDropdownItem (click)="choose(option)">
+                          {{ option }}
+                        </button>
+                      </ng-container>
+                    </div>
+                  </div>
                 </div>
               </div>
               <div class="row h-75">

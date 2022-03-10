@@ -1,4 +1,7 @@
 <div class="main-content">
   <app-nav></app-nav>
+  <div class="container container-images">
+    <app-images-cards [images]="images"></app-images-cards>
+  </div>
   <app-add-image [routerLink]="['/upload']"></app-add-image>
 </div>

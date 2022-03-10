@@ -1,0 +1,13 @@
+$column-width: 300px;
+$column-gap: 1em;
+
+div {
+  box-sizing: border-box;
+}
+.container-images {
+  display: flex;
+  flex-flow: column wrap; /* Shorthand – you could use ‘flex-direction: column’ and ‘flex-wrap: wrap’ instead */
+  justify-content: flex-start;
+  align-items: flex-start;
+  height: 90vh;
+}

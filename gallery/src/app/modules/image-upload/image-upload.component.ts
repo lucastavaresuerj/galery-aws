@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+
 import { S3Service } from 'src/app/services/s3/s3.service';
 
 @Component({
@@ -9,6 +10,8 @@ import { S3Service } from 'src/app/services/s3/s3.service';
 export class ImageUploadComponent implements OnInit {
   image!: image;
   imageForm!: imageForm;
+  options: level[] = ['public', 'private', 'protected'];
+  security: level = 'public';
 
   constructor(private s3Service: S3Service) {}
 
@@ -26,11 +29,16 @@ export class ImageUploadComponent implements OnInit {
     this.imageForm = values;
   }
 
+  choose(option: level) {
+    this.security = option;
+  }
+
   async save() {
     if (this.image && this.imageForm) {
       const fileExtension = this.image.file.name.replace(/.+\.(.+)$/g, '$1');
       await this.s3Service.upload(this.image.file, {
         name: `original-size-${this.imageForm.title}.${fileExtension}`,
+        level: this.security,
       });
     }
   }

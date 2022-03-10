@@ -4,6 +4,9 @@ import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 
+// External modules
+import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
+
 // Internal modules
 import { CommonComponentsModule } from '../common-components/common-components.module';
 import { AmplifyModule } from '../../amplify/amplify.module';
@@ -31,6 +34,7 @@ const exports: (any[] | Type<any>)[] | undefined = [ImageUploadComponent];
     CommonModule,
     ReactiveFormsModule,
     RouterModule,
+    NgbDropdownModule,
     CommonComponentsModule,
     AmplifyModule,
   ],

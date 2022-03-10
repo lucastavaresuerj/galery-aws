@@ -1,0 +1,12 @@
+@import "bootstrap/scss/_functions";
+@import "bootstrap/scss/_variables";
+@import "bootstrap/scss/mixins/_breakpoints";
+
+.container-images {
+  @include media-breakpoint-up(lg) {
+    max-width: 1700px;
+  }
+  @include media-breakpoint-up(xl) {
+    max-width: 1800px;
+  }
+}

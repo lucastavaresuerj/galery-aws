@@ -11,6 +11,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AmplifyModule } from './amplify/amplify.module';
 import { AuthComponentsModule } from './modules/auth-components/auth-components.module';
 import { ImageUploadModule } from './modules/image-upload/image-upload.module';
+import { ImagesCardsModule } from './modules/images-cards/images-cards.module';
 import { CommonComponentsModule } from './modules/common-components/common-components.module';
 
 // Services
@@ -46,6 +47,7 @@ import { AddImageComponent } from './components/add-image/add-image.component';
     AppRoutingModule,
     AuthComponentsModule,
     ImageUploadModule,
+    ImagesCardsModule,
     CommonComponentsModule,
   ],
   providers: [AuthService, S3Service],
